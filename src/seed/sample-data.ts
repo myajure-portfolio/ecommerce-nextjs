@@ -1,3 +1,5 @@
+import { hashSync } from "bcryptjs";
+
 export const categories: string[] = [
   "Shirts",
   "Pants",
@@ -11,7 +13,7 @@ export const categories: string[] = [
   "Underwear",
 ];
 
-export interface ProductSeedInput {
+export interface IProductSeedInput {
   name: string;
   slug: string;
   description: string;
@@ -29,7 +31,29 @@ export interface ProductSeedInput {
 
 type ValidSizes = "XS" | "S" | "M" | "L" | "XL" | "XXL" | "XXXL";
 
-export const products: ProductSeedInput[] = [
+export interface IUserSeedInput {
+  name: string;
+  email: string;
+  password: string;
+  role: "admin" | "user";
+}
+
+export const users: IUserSeedInput[] = [
+  {
+    name: "John Doe",
+    email: "test@gmail.com",
+    password: hashSync("123456", 10),
+    role: "admin",
+  },
+  {
+    name: "Jane Smith",
+    email: "test1@gmail.com",
+    password: hashSync("123456", 10),
+    role: "user",
+  },
+];
+
+export const products: IProductSeedInput[] = [
   {
     name: "Polo Sporting Stretch Shirt",
     slug: "polo-sporting-stretch-shirt",

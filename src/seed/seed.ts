@@ -1,13 +1,21 @@
 import { PrismaClient } from "../generated/prisma";
-import { categories, products } from "./sample-data";
+import { categories, products, users } from "./sample-data";
 
 async function main() {
   const prisma = new PrismaClient();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.account.deleteMany();
+  await prisma.session.deleteMany();
+  await prisma.verificationToken.deleteMany();
+  await prisma.user.deleteMany();
 
   try {
+    await prisma.user.createMany({
+      data: users,
+    });
+
     await prisma.category.createMany({
       data: categories.map((category) => ({
         name: category,
