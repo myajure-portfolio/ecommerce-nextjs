@@ -12,8 +12,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
      NEXT_PUBLIC_SERVER_URL = 'http://localhost:3000'
      LATEST_PRODUCTS_LIMIT = 4
      DATABASE_URL=""
+     AUTH_SECRET=""
      ```
    - Make sure to properly set the `DATABASE_URL` variable with your database connection string (PostgreSQL).
+   - Run npx auth secret to set AUTH_SECRET
 
 2. **Set up Prisma**
 
