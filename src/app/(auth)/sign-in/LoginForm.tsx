@@ -1,5 +1,6 @@
 "use client";
 
+import { signInWithCredentials } from "@/actions";
 import {
   Button,
   Card,
@@ -10,20 +11,36 @@ import {
   Label,
   Separator,
 } from "@/components";
+import { signInDefaultValues } from "@/lib";
 import { Eye, EyeOff, Mail } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useActionState, useState } from "react";
+import { useFormStatus } from "react-dom";
 
 export const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+
+  const [data, action] = useActionState(signInWithCredentials, {
+    success: false,
+    message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("Login attempt:", formData);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
+  const SignInButton = () => {
+    const { pending } = useFormStatus();
+
+    return (
+      <Button
+        className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
+        variant="default"
+        disabled={pending}
+      >
+        {pending ? "Signing In..." : "Sign In"}
+      </Button>
+    );
   };
 
   return (
@@ -36,17 +53,23 @@ export const LoginForm = () => {
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {data.message !== "" && !data.success && (
+          <div className="flex items-center justify-center gap-2 text-center text-destructive bg-destructive/10 rounded-md py-2 px-4">
+            <span>{data.message}</span>
+          </div>
+        )}
+        <form action={action} className="space-y-4">
+          <input type="hidden" name="callbackUrl" value={callbackUrl} />
+
           <div className="space-y-2">
             <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
               type="email"
               placeholder="your@email.com"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
+              name="email"
+              autoComplete="email"
+              defaultValue={signInDefaultValues.email}
               required
             />
           </div>
@@ -57,10 +80,9 @@ export const LoginForm = () => {
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="••••••••"
-                value={formData.password}
-                onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
-                }
+                name="password"
+                autoComplete="current-password"
+                defaultValue={signInDefaultValues.password}
                 required
               />
               <Button
@@ -86,12 +108,7 @@ export const LoginForm = () => {
               Forgot your password?
             </Link>
           </div>
-          <Button
-            type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
-          >
-            Sign In
-          </Button>
+          <SignInButton />
         </form>
 
         <div className="relative">

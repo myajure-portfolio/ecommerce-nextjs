@@ -1,6 +1,16 @@
+import { redirect } from "next/navigation";
 import { LoginForm } from "./LoginForm";
+import { auth } from "@/auth";
 
-const LoginPage = () => {
+const SignInPage = async (props: {
+  searchParams: Promise<{ callbackUrl: string }>;
+}) => {
+  const { callbackUrl } = await props.searchParams;
+
+  const session = await auth();
+
+  if (session) return redirect(callbackUrl || "/");
+
   return (
     <div className="max-w-md mx-auto">
       <div className="text-center mb-8">
@@ -12,4 +22,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignInPage;
