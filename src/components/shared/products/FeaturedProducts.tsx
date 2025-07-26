@@ -3,52 +3,16 @@
 import { useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { ProductCard } from "./ProductCard";
-import { Button } from '@/components';
+import { Button } from "@/components";
+import { IProduct } from "@/interfaces";
 
-const products = [
-  {
-    id: 1,
-    name: "Elegant Summer Dress",
-    price: 89.99,
-    image:
-      "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=400",
-    category: "Dresses",
-    size: "M",
-    color: "Blue",
-  },
-  {
-    id: 2,
-    name: "Classic Denim Jacket",
-    price: 129.99,
-    image:
-      "https://images.pexels.com/photos/1192609/pexels-photo-1192609.jpeg?auto=compress&cs=tinysrgb&w=400",
-    category: "Jackets",
-    size: "L",
-    color: "Blue",
-  },
-  {
-    id: 3,
-    name: "Casual Striped Tee",
-    price: 34.99,
-    image:
-      "https://images.pexels.com/photos/2065200/pexels-photo-2065200.jpeg?auto=compress&cs=tinysrgb&w=400",
-    category: "T-Shirts",
-    size: "S",
-    color: "White",
-  },
-  {
-    id: 4,
-    name: "Premium Wool Sweater",
-    price: 159.99,
-    image:
-      "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=400",
-    category: "Sweaters",
-    size: "M",
-    color: "Gray",
-  },
-];
+interface IFeaturedProductsProps {
+  products: IProduct[];
+}
 
-export const FeaturedProducts = () => {
+export const FeaturedProducts: React.FC<IFeaturedProductsProps> = ({
+  products,
+}) => {
   const [favorites, setFavorites] = useState<number[]>([]);
 
   const toggleFavorite = (productId: number) => {
@@ -79,7 +43,10 @@ export const FeaturedProducts = () => {
           </div>
 
           <div className="text-center">
-            <Button size="lg" className="w-80 h-13 group inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-lg px-8 py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105">
+            <Button
+              size="lg"
+              className="w-80 h-13 group inline-flex items-center space-x-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-lg px-8 py-4 rounded-xl font-semibold transition-all duration-200 hover:scale-105"
+            >
               <span>View All Products</span>
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform duration-200" />
             </Button>

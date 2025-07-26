@@ -1,3 +1,4 @@
+import { getLatestProducts } from "@/actions";
 import {
   FeaturedProducts,
   Features,
@@ -5,6 +6,7 @@ import {
   Newsletter,
   Testimonials,
 } from "@/components";
+import { IProduct } from "@/interfaces";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,11 +14,13 @@ export const metadata: Metadata = {
 };
 
 const HomePage = async () => {
+  const latestProducts: IProduct[] = await getLatestProducts();
+
   return (
     <>
       <Hero />
       <Features />
-      <FeaturedProducts />
+      <FeaturedProducts products={latestProducts} />
       <Testimonials />
       <Newsletter />
     </>
