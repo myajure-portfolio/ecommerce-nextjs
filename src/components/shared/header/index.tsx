@@ -37,25 +37,25 @@ export const Header = () => {
               href="/"
               className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
-              Inicio
+              Home
             </Link>
             <Link
               href="/productos"
               className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
-              Productos
+              Products
             </Link>
             <Link
               href="/categorias"
               className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
-              Categorías
+              Categories
             </Link>
             <Link
               href="/ofertas"
               className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
             >
-              Ofertas
+              Offers
             </Link>
           </nav>
 
@@ -99,7 +99,7 @@ export const Header = () => {
                   className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   <User className="h-4 w-4 mr-2" />
-                  Entrar
+                  Sign In
                 </Button>
               </Link>
               <Link href="/sign-up">
@@ -107,7 +107,7 @@ export const Header = () => {
                   size="sm"
                   className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md"
                 >
-                  Registrarse
+                  Sign Up
                 </Button>
               </Link>
             </div>
@@ -133,25 +133,25 @@ export const Header = () => {
                     href="/"
                     className="text-lg font-medium text-gray-900 dark:text-white"
                   >
-                    Inicio
+                    Home
                   </Link>
                   <Link
                     href="/productos"
                     className="text-lg font-medium text-gray-900 dark:text-white"
                   >
-                    Productos
+                    Products
                   </Link>
                   <Link
                     href="/categorias"
                     className="text-lg font-medium text-gray-900 dark:text-white"
                   >
-                    Categorías
+                    Categories
                   </Link>
                   <Link
                     href="/ofertas"
                     className="text-lg font-medium text-gray-900 dark:text-white"
                   >
-                    Ofertas
+                    Offers
                   </Link>
                   <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
                     <Link href="/sign-in" className="block mb-2">
@@ -159,12 +159,12 @@ export const Header = () => {
                         variant="outline"
                         className="w-full bg-transparent border-gray-300 dark:border-gray-600"
                       >
-                        Iniciar Sesión
+                        Sign In
                       </Button>
                     </Link>
                     <Link href="/sign-up">
                       <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-                        Registrarse
+                        Sign Up
                       </Button>
                     </Link>
                   </div>

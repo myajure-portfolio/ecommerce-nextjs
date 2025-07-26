@@ -38,11 +38,11 @@ export const LoginForm = () => {
       <CardContent className="space-y-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="email">Correo Electrónico</Label>
+            <Label htmlFor="email">Email Address</Label>
             <Input
               id="email"
               type="email"
-              placeholder="tu@email.com"
+              placeholder="your@email.com"
               value={formData.email}
               onChange={(e) =>
                 setFormData({ ...formData, email: e.target.value })
@@ -51,7 +51,7 @@ export const LoginForm = () => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Contraseña</Label>
+            <Label htmlFor="password">Password</Label>
             <div className="relative">
               <Input
                 id="password"
@@ -83,14 +83,14 @@ export const LoginForm = () => {
               href="/forgot-password"
               className="text-sm text-muted-foreground hover:text-foreground"
             >
-              ¿Olvidaste tu contraseña?
+              Forgot your password?
             </Link>
           </div>
           <Button
             type="submit"
             className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700"
           >
-            Iniciar Sesión
+            Sign In
           </Button>
         </form>
 
@@ -100,7 +100,7 @@ export const LoginForm = () => {
           </div>
           <div className="relative flex justify-center text-xs uppercase">
             <span className="bg-background px-2 text-muted-foreground">
-              O continúa con
+              Or continue with
             </span>
           </div>
         </div>
@@ -141,12 +141,12 @@ export const LoginForm = () => {
       </CardContent>
       <CardFooter className="flex flex-col space-y-4">
         <div className="text-center text-sm text-muted-foreground">
-          ¿No tienes una cuenta?{" "}
+          Don't have an account?{" "}
           <Link
             href="/sign-up"
             className="text-foreground hover:underline font-medium"
           >
-            Regístrate aquí
+            Register here
           </Link>
         </div>
       </CardFooter>
