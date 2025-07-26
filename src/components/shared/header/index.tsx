@@ -2,10 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Badge, Button, Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components';
+import {
+  Badge,
+  Button,
+  Sheet,
+  SheetContent,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components";
 import { ShoppingCart, Menu, User, Moon, Sun, Heart } from "lucide-react";
 import { useTheme } from "next-themes";
-import { CartSheet } from './CartSheet';
+import { CartSheet } from "./CartSheet";
+import { APP_NAME } from "@/lib/constants";
 
 export const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -19,7 +27,7 @@ export const Header = () => {
           <Link href="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600" />
             <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Loom Store
+              {APP_NAME}
             </span>
           </Link>
 
@@ -170,4 +178,4 @@ export const Header = () => {
       <CartSheet open={isCartOpen} onOpenChange={setIsCartOpen} />
     </header>
   );
-}
+};
