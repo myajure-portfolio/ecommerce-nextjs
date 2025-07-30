@@ -1,20 +1,18 @@
-"use client";
-
-import { useSession } from "next-auth/react";
+import { FC } from "react";
+import Link from "next/link";
+import { Session } from "next-auth";
 import {
   Button,
+  DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components";
-import { DropdownMenu } from "@radix-ui/react-dropdown-menu";
-import { User, UserIcon } from "lucide-react";
-import Link from "next/link";
-import { FC } from "react";
-import { Session } from "next-auth";
+import { User } from "lucide-react";
+import { signOutUser } from "@/actions";
 
-const UserButton: FC<{ user: Session | null }> = ({ user }) => {
+const UserButton: FC<{ user?: Session | null }> = ({ user }) => {
   const session = user;
 
   if (!session) {
@@ -69,7 +67,7 @@ const UserButton: FC<{ user: Session | null }> = ({ user }) => {
             </div>
           </DropdownMenuLabel>
           <DropdownMenuItem className="p-0 mb-1">
-            <form className="w-full">
+            <form className="w-full" action={signOutUser}>
               <Button
                 variant="ghost"
                 className="w-full py-4 px-2 h-4 justify-start"

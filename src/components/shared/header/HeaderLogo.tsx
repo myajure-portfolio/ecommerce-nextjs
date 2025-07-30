@@ -1,5 +1,5 @@
-import { APP_NAME } from "@/lib";
 import Link from "next/link";
+import { APP_NAME } from "@/lib";
 
 export const HeaderLogo = () => (
   <Link href="/" className="flex items-center space-x-2">

@@ -1,3 +1,6 @@
+import { FC } from "react";
+import Link from "next/link";
+import { Session } from "next-auth";
 import {
   Badge,
   Button,
@@ -9,13 +12,10 @@ import {
 } from "@/components";
 import { APP_NAME } from "@/lib";
 import { Heart, Menu, Moon, ShoppingCart, Sun } from "lucide-react";
-import Link from "next/link";
-import { FC } from "react";
 import UserButton from "./UserButton";
-import { Session } from "next-auth";
 
 interface IHeaderActionsProps {
-  user: Session | null;
+  user?: Session | null;
   setIsCartOpen: (open: boolean) => void;
   theme: string | undefined;
   setTheme: (theme: string) => void;

@@ -2,14 +2,14 @@
 
 import { FC, useState } from "react";
 import { useTheme } from "next-themes";
-import { CartSheet } from "./CartSheet";
 import { Session } from "next-auth";
+import { CartSheet } from "./CartSheet";
 import { HeaderLogo } from "./HeaderLogo";
 import { HeaderNav } from "./HeaderNav";
 import { HeaderActions } from "./HeaderActions";
 
 interface IHeaderProps {
-  user: Session | null;
+  user?: Session | null;
 }
 
 export const Header: FC<IHeaderProps> = ({ user }) => {
