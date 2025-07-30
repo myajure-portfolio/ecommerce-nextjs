@@ -15,3 +15,4 @@ export * from "./ui/separator";
 export * from "./ui/card";
 export * from "./ui/label";
 export * from "./ui/dropdown-menu";
+export * from "./ui/loader";

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { LoginForm } from "./LoginForm";
+import { SignInForm } from "./SignInForm";
 import { auth } from "@/auth";
 
 const SignInPage = async (props: {
@@ -17,7 +17,7 @@ const SignInPage = async (props: {
         <h1 className="text-3xl font-bold text-foreground mb-2">Sign In</h1>
         <p className="text-muted-foreground">Access your account to continue</p>
       </div>
-      <LoginForm />
+      <SignInForm />
     </div>
   );
 };

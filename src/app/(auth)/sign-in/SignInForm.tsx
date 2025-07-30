@@ -18,7 +18,7 @@ import { useSearchParams } from "next/navigation";
 import { useActionState, useState } from "react";
 import { useFormStatus } from "react-dom";
 
-export const LoginForm = () => {
+export const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const [data, action] = useActionState(signInWithCredentials, {
