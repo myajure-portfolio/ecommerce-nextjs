@@ -1,9 +1,8 @@
 "use server";
 
 import { signIn } from "@/auth";
-import { signInFormSchema } from "@/lib";
+import { formatError, signInFormSchema } from "@/lib";
 import { isRedirectError } from "next/dist/client/components/redirect-error";
-import z from "zod";
 
 export const signInWithCredentials = async (
   prevState: unknown,
@@ -18,15 +17,11 @@ export const signInWithCredentials = async (
     await signIn("credentials", user);
 
     return { success: true, message: "Sign in successful" };
-  } catch (error) {
+  } catch (error: unknown) {
     if (isRedirectError(error)) {
       throw error;
     }
 
-    if (error instanceof z.ZodError) {
-      return { success: false, message: error.issues[0].message };
-    }
-
-    return { success: false, message: "Invalid credentials" };
+    return { success: false, message: formatError(error) };
   }
 };
