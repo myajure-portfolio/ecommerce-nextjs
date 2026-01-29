@@ -1,18 +1,12 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import {
-  Badge,
-  Button,
-  Sheet,
-  SheetContent,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components";
-import { ShoppingCart, Menu, User, Moon, Sun, Heart } from "lucide-react";
-import { useTheme } from "next-themes";
-import { CartSheet } from "./CartSheet";
+import { useState } from 'react';
+import Link from 'next/link';
+import { Badge, Button, Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components';
+import { ShoppingCart, Menu, User, Moon, Sun, Heart } from 'lucide-react';
+import { useTheme } from 'next-themes';
+import { CartSheet } from './CartSheet';
+import { APP_NAME } from '@/lib/constants';
 
 export const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -25,9 +19,7 @@ export const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <div className="h-8 w-8 rounded-full bg-linear-to-r from-blue-600 to-indigo-600" />
-            <span className="text-xl font-bold text-gray-900 dark:text-white">
-              Loom Store
-            </span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white">{APP_NAME}</span>
           </Link>
 
           {/* Navigation Desktop */}
@@ -63,7 +55,7 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
               className="hidden sm:inline-flex text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
             >
               <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -122,16 +114,10 @@ export const Header = () => {
                   <Menu className="h-4 w-4" />
                 </Button>
               </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-80 bg-white dark:bg-gray-900 p-5"
-              >
+              <SheetContent side="right" className="w-80 bg-white dark:bg-gray-900 p-5">
                 <SheetTitle className="text-center">Menu</SheetTitle>
                 <div className="flex flex-col space-y-4 mt-8">
-                  <Link
-                    href="/"
-                    className="text-lg font-medium text-gray-900 dark:text-white"
-                  >
+                  <Link href="/" className="text-lg font-medium text-gray-900 dark:text-white">
                     Inicio
                   </Link>
                   <Link
