@@ -1,17 +1,18 @@
-import React from "react";
-import { ShoppingCart, Heart } from "lucide-react";
-import { Button } from "@/components";
+import React from 'react';
+import { ShoppingCart, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { IProduct } from '@/interfaces';
 
-interface ProductCardProps {
-  product: any;
+interface IProductCardProps {
+  product: IProduct;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<IProductCardProps> = ({ product }) => {
   return (
     <div className="group bg-white dark:bg-gray-900 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-200 dark:border-gray-700">
       <div className="relative overflow-hidden">
         <img
-          src={product.image}
+          src={product.images[0]}
           alt={product.name}
           className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
         />
@@ -49,11 +50,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </Button>
         </div>
 
-        {(product.size || product.color) && (
+        {product.sizes && (
           <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
             <div className="flex items-center space-x-4 text-sm text-gray-700 dark:text-gray-200">
-              {product.size && <span>Size: {product.size}</span>}
-              {product.color && <span>Color: {product.color}</span>}
+              {product.sizes && <span>Size: {product.sizes.join(', ')}</span>}
             </div>
           </div>
         )}
