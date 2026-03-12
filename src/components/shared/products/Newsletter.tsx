@@ -1,18 +1,19 @@
-"use client";
+'use client';
 
-import type React from "react";
+import type React from 'react';
 
-import { useState } from "react";
-import { Mail } from "lucide-react";
-import { Button, Input } from "@/components";
+import { useState } from 'react';
+import { Mail } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 export const Newsletter = () => {
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Newsletter subscription:", email);
-    setEmail("");
+    console.log('Newsletter subscription:', email);
+    setEmail('');
   };
 
   return (
@@ -27,8 +28,8 @@ export const Newsletter = () => {
               Stay up to date with fashion
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-lg">
-              Subscribe to our newsletter and receive the latest trends,
-              exclusive offers, and style tips directly in your inbox.
+              Subscribe to our newsletter and receive the latest trends, exclusive offers, and style
+              tips directly in your inbox.
             </p>
           </div>
 
@@ -40,7 +41,7 @@ export const Newsletter = () => {
               type="email"
               placeholder="you@email.com"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               required
               className="flex-1 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
             />
@@ -53,8 +54,8 @@ export const Newsletter = () => {
           </form>
 
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-4">
-            By subscribing, you agree to receive promotional emails. You can
-            unsubscribe at any time.
+            By subscribing, you agree to receive promotional emails. You can unsubscribe at any
+            time.
           </p>
         </div>
       </div>

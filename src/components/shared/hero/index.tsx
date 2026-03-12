@@ -1,5 +1,5 @@
-import { ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components";
+import { Button } from '@/components/ui/button';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 export const Hero = () => {
   return (
@@ -25,9 +25,7 @@ export const Hero = () => {
           <div className="space-y-8">
             <div className="flex items-center space-x-2 text-blue-600 dark:text-blue-400">
               <Sparkles className="h-5 w-5" />
-              <span className="text-sm font-medium uppercase tracking-wide">
-                New Collection
-              </span>
+              <span className="text-sm font-medium uppercase tracking-wide">New Collection</span>
             </div>
 
             <div className="space-y-4">
@@ -38,8 +36,8 @@ export const Hero = () => {
                 </span>
               </h1>
               <p className="text-xl text-gray-700 dark:text-gray-200 max-w-lg">
-                Explore our curated collection of premium fashion pieces that
-                blend comfort, style, and sustainability.
+                Explore our curated collection of premium fashion pieces that blend comfort, style,
+                and sustainability.
               </p>
               <Button
                 size="lg"
@@ -52,28 +50,16 @@ export const Hero = () => {
 
             <div className="flex items-center space-x-8 pt-8">
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                  10K+
-                </div>
-                <div className="text-sm text-gray-700 dark:text-gray-200">
-                  Happy Customers
-                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">10K+</div>
+                <div className="text-sm text-gray-700 dark:text-gray-200">Happy Customers</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                  500+
-                </div>
-                <div className="text-sm text-gray-700 dark:text-gray-200">
-                  Products
-                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">500+</div>
+                <div className="text-sm text-gray-700 dark:text-gray-200">Products</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900 dark:text-white">
-                  4.9
-                </div>
-                <div className="text-sm text-gray-700 dark:text-gray-200">
-                  Rating
-                </div>
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">4.9</div>
+                <div className="text-sm text-gray-700 dark:text-gray-200">Rating</div>
               </div>
             </div>
           </div>
@@ -85,13 +71,13 @@ export const Hero = () => {
                   src="https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Fashion model 1"
                   className="w-full h-48 object-cover rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300"
-                  style={{ border: "2px solid #E5E7EB" }}
+                  style={{ border: '2px solid #E5E7EB' }}
                 />
                 <img
                   src="https://images.pexels.com/photos/1192609/pexels-photo-1192609.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Fashion model 2"
                   className="w-full h-64 object-cover rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300"
-                  style={{ border: "2px solid #E5E7EB" }}
+                  style={{ border: '2px solid #E5E7EB' }}
                 />
               </div>
               <div className="space-y-4 pt-8">
@@ -99,13 +85,13 @@ export const Hero = () => {
                   src="https://images.pexels.com/photos/2065200/pexels-photo-2065200.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Fashion model 3"
                   className="w-full h-64 object-cover rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300"
-                  style={{ border: "2px solid #E5E7EB" }}
+                  style={{ border: '2px solid #E5E7EB' }}
                 />
                 <img
                   src="https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg?auto=compress&cs=tinysrgb&w=400"
                   alt="Fashion model 4"
                   className="w-full h-48 object-cover rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300"
-                  style={{ border: "2px solid #E5E7EB" }}
+                  style={{ border: '2px solid #E5E7EB' }}
                 />
               </div>
             </div>

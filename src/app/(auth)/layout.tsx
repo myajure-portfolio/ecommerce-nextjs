@@ -1,4 +1,5 @@
-import { Footer, Header } from '@/components';
+import { Header } from '@/components/shared/header';
+import { Footer } from '@/components/shared/footer';
 
 const AuthLayout = ({
   children,

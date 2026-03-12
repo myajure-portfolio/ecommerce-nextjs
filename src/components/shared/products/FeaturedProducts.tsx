@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { ProductCard } from './ProductCard';
-import { Button } from '@/components';
 import { IProduct } from '@/interfaces';
+import { Button } from '@/components/ui/button';
 
 interface IFeaturedProductsProps {
   products: IProduct[];

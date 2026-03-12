@@ -1,26 +1,26 @@
-import { Star } from "lucide-react";
+import { Star } from 'lucide-react';
 
 const testimonials = [
   {
-    name: "Sarah Johnson",
+    name: 'Sarah Johnson',
     rating: 5,
-    comment: "Amazing quality and fast shipping. Love my new dress!",
+    comment: 'Amazing quality and fast shipping. Love my new dress!',
     image:
-      "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=100",
+      'https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=100',
   },
   {
-    name: "Emma Davis",
+    name: 'Emma Davis',
     rating: 5,
-    comment: "Perfect fit and excellent customer service. Highly recommend!",
+    comment: 'Perfect fit and excellent customer service. Highly recommend!',
     image:
-      "https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=100",
+      'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=100',
   },
   {
-    name: "Jessica Wilson",
+    name: 'Jessica Wilson',
     rating: 5,
-    comment: "Stylish clothes at great prices. My go-to fashion store!",
+    comment: 'Stylish clothes at great prices. My go-to fashion store!',
     image:
-      "https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=100",
+      'https://images.pexels.com/photos/1181676/pexels-photo-1181676.jpeg?auto=compress&cs=tinysrgb&w=100',
   },
 ];
 
@@ -55,17 +55,12 @@ export const Testimonials = () => {
                   </h4>
                   <div className="flex items-center">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="h-4 w-4 text-yellow-400 fill-current"
-                      />
+                      <Star key={i} className="h-4 w-4 text-yellow-400 fill-current" />
                     ))}
                   </div>
                 </div>
               </div>
-              <p className="text-gray-700 dark:text-gray-200 italic">
-                "{testimonial.comment}"
-              </p>
+              <p className="text-gray-700 dark:text-gray-200 italic">"{testimonial.comment}"</p>
             </div>
           ))}
         </div>

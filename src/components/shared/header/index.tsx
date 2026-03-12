@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Badge, Button, Sheet, SheetContent, SheetTitle, SheetTrigger } from '@/components';
 import { ShoppingCart, Menu, User, Moon, Sun, Heart } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { CartSheet } from './CartSheet';
+import { Button } from '@/components/ui/button';
+import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { APP_NAME } from '@/lib/constants';
+import { Badge } from '@/components/ui/badge';
 
 export const Header = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
