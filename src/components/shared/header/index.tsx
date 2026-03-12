@@ -83,7 +83,7 @@ export const Header = () => {
             </Button>
 
             <div className="hidden sm:flex items-center space-x-2">
-              <Link href="/login">
+              <Link href="/sign-in">
                 <Button
                   variant="ghost"
                   size="sm"
@@ -93,7 +93,7 @@ export const Header = () => {
                   Entrar
                 </Button>
               </Link>
-              <Link href="/register">
+              <Link href="/sign-up">
                 <Button
                   size="sm"
                   className="bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md"
@@ -139,7 +139,7 @@ export const Header = () => {
                     Ofertas
                   </Link>
                   <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-                    <Link href="/login" className="block mb-2">
+                    <Link href="/sign-in" className="block mb-2">
                       <Button
                         variant="outline"
                         className="w-full bg-transparent border-gray-300 dark:border-gray-600"
@@ -147,7 +147,7 @@ export const Header = () => {
                         Iniciar Sesión
                       </Button>
                     </Link>
-                    <Link href="/register">
+                    <Link href="/sign-up">
                       <Button className="w-full bg-linear-to-r from-blue-600 to-indigo-600 text-white">
                         Registrarse
                       </Button>
