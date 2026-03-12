@@ -56,12 +56,12 @@ export const LoginForm = () => {
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-2.5">
               <Label htmlFor="email" className="font-medium text-foreground/90">
-                Correo electrónico
+                Email Address
               </Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="tu@email.com"
+                placeholder="you@email.com"
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                 required
@@ -71,13 +71,13 @@ export const LoginForm = () => {
             <div className="space-y-2.5">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password" className="font-medium text-foreground/90">
-                  Contraseña
+                  Password
                 </Label>
                 <Link
                   href="/forgot-password"
                   className="text-xs font-medium text-blue-600 hover:text-blue-500 transition-colors"
                 >
-                  ¿Olvidaste tu contraseña?
+                  Forgot your password?
                 </Link>
               </div>
               <div className="relative">
@@ -107,7 +107,7 @@ export const LoginForm = () => {
                 type="submit"
                 className="w-full h-11 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md shadow-indigo-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5 rounded-xl font-medium text-[15px] cursor-pointer"
               >
-                Iniciar sesión
+                Sign In
               </Button>
             </div>
           </form>
@@ -118,7 +118,7 @@ export const LoginForm = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-card px-3 text-muted-foreground font-medium tracking-wider">
-                O continúa con
+                Or continue with
               </span>
             </div>
           </div>
@@ -161,12 +161,12 @@ export const LoginForm = () => {
         </CardContent>
         <CardFooter className="flex flex-col space-y-4 pt-2 pb-8 bg-muted/10 border-t border-border/40 mt-2">
           <div className="text-center text-[14px] text-muted-foreground">
-            ¿No tienes una cuenta?{' '}
+            Don't have an account?{' '}
             <Link
               href="/sign-up"
               className="text-blue-600 hover:text-blue-700 hover:underline font-semibold transition-colors"
             >
-              Regístrate aquí
+              Sign up here
             </Link>
           </div>
         </CardFooter>

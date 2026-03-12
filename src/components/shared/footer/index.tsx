@@ -36,31 +36,31 @@ export const Footer = () => {
 
           {/* Shop */}
           <div>
-            <h3 className="font-semibold mb-3 tracking-wide">Tienda</h3>
+            <h3 className="font-semibold mb-3 tracking-wide">Shop</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Todos los Productos
+                  All Products
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Vestidos
+                  Dresses
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Blusas
+                  Blouses
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Pantalones
+                  Pants
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Accesorios
+                  Accessories
                 </Link>
               </li>
             </ul>
@@ -68,31 +68,31 @@ export const Footer = () => {
 
           {/* Support */}
           <div>
-            <h3 className="font-semibold mb-3 tracking-wide">Soporte</h3>
+            <h3 className="font-semibold mb-3 tracking-wide">Support</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Contacto
+                  Contact
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Envíos y Devoluciones
+                  Shipping & Returns
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Guía de Tallas
+                  Size Guide
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Preguntas Frecuentes
+                  FAQ
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Cuidado de Prendas
+                  Garment Care
                 </Link>
               </li>
             </ul>
@@ -100,31 +100,31 @@ export const Footer = () => {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold mb-3 tracking-wide">Empresa</h3>
+            <h3 className="font-semibold mb-3 tracking-wide">Company</h3>
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Sobre Nosotros
+                  About Us
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Carreras
+                  Careers
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Sostenibilidad
+                  Sustainability
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Política de Privacidad
+                  Privacy Policy
                 </Link>
               </li>
               <li>
                 <Link href="/#" className="text-gray-500 hover:text-blue-700 transition-colors">
-                  Términos y Condiciones
+                  Terms & Conditions
                 </Link>
               </li>
             </ul>
@@ -134,20 +134,20 @@ export const Footer = () => {
         <div className="border-t border-blue-100 mt-14 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-xs text-gray-500">
-              © {currentYear} {APP_NAME}. Todos los derechos reservados.
+              © {currentYear} {APP_NAME}. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <Link
                 href="/#"
                 className="text-xs text-gray-500 hover:text-blue-700 transition-colors"
               >
-                Privacidad
+                Privacy
               </Link>
               <Link
                 href="/#"
                 className="text-xs text-gray-500 hover:text-blue-700 transition-colors"
               >
-                Términos
+                Terms
               </Link>
               <Link
                 href="/#"
