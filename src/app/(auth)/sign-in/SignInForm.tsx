@@ -1,5 +1,6 @@
 'use client';
 
+import { signInWithCredentials } from '@/actions/auth/signin';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardContent, CardFooter } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -7,7 +8,9 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Eye, EyeOff, Mail } from 'lucide-react';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useActionState, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 
 export const SignInForm = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -17,9 +20,26 @@ export const SignInForm = () => {
   });
   const [isHovered, setIsHovered] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Login attempt:', formData);
+  const [data, action] = useActionState(signInWithCredentials, {
+    success: false,
+    message: '',
+  });
+
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  const SignInButton = () => {
+    const { pending } = useFormStatus();
+
+    return (
+      <Button
+        className="w-full h-11 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md shadow-indigo-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5 rounded-xl font-medium text-[15px] cursor-pointer"
+        variant="default"
+        disabled={pending}
+      >
+        {pending ? 'Signing In...' : 'Sign In'}
+      </Button>
+    );
   };
 
   return (
@@ -48,7 +68,13 @@ export const SignInForm = () => {
           </div>
         </CardHeader>
         <CardContent className="space-y-5 px-6 sm:px-8">
-          <form onSubmit={handleSubmit} className="space-y-5">
+          {data.message !== '' && !data.success && (
+            <div className="flex items-center justify-center gap-2 text-center text-destructive bg-destructive/10 rounded-md py-2 px-4">
+              <span>{data.message}</span>
+            </div>
+          )}
+          <form action={action} className="space-y-5">
+            <input type="hidden" name="callbackUrl" value={callbackUrl} />
             <div className="space-y-2.5">
               <Label htmlFor="email" className="font-medium text-foreground/90">
                 Email Address
@@ -60,6 +86,7 @@ export const SignInForm = () => {
                 value={formData.email}
                 onChange={e => setFormData({ ...formData, email: e.target.value })}
                 required
+                name="email"
                 className="bg-muted/40 border-muted-foreground/20 focus:bg-background focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 h-11 rounded-xl"
               />
             </div>
@@ -83,6 +110,7 @@ export const SignInForm = () => {
                   value={formData.password}
                   onChange={e => setFormData({ ...formData, password: e.target.value })}
                   required
+                  name="password"
                   className="bg-muted/40 border-muted-foreground/20 focus:bg-background focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all duration-300 h-11 rounded-xl pr-10"
                 />
                 <Button
@@ -98,12 +126,7 @@ export const SignInForm = () => {
             </div>
 
             <div className="pt-2">
-              <Button
-                type="submit"
-                className="w-full h-11 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white shadow-md shadow-indigo-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/40 hover:-translate-y-0.5 rounded-xl font-medium text-[15px] cursor-pointer"
-              >
-                Sign In
-              </Button>
+              <SignInButton />
             </div>
           </form>
 
