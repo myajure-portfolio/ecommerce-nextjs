@@ -5,6 +5,7 @@ export interface IProduct {
   name: string;
   description: string;
   price: string;
+  slug: string;
   rating: string;
   images: string[];
   sizes: Size[];
