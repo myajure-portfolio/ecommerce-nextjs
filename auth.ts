@@ -40,21 +40,26 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }),
   ],
   session: {
-    strategy: 'jwt',
+    strategy: 'jwt' as const,
+    maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    jwt({ token, user }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = user.role;
+        token.email = user.email;
       }
       return token;
     },
 
     async session({ session, user, trigger, token }) {
       session.user.id = token.sub as string;
+      session.user.role = token.role as string | undefined;
+      session.user.name = token.name as string;
 
       if (trigger === 'update') {
-        session.user.name = user.name;
+        session.user.name = user.name as string;
       }
 
       return session;
