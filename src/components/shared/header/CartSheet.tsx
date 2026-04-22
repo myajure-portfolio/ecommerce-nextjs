@@ -75,7 +75,7 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2">
             <ShoppingBag className="h-5 w-5" />
-            Carrito de Compras
+            Shopping Cart
             <Badge variant="secondary">{cartItems.length}</Badge>
           </SheetTitle>
         </SheetHeader>
@@ -85,12 +85,12 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
             <div className="flex-1 flex items-center justify-center">
               <div className="text-center">
                 <ShoppingBag className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <p className="text-muted-foreground">Tu carrito está vacío</p>
+                <p className="text-muted-foreground">Your cart is empty</p>
                 <Button
                   className="mt-4 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white"
                   onClick={() => onOpenChange(false)}
                 >
-                  Continuar Comprando
+                  Continue Shopping
                 </Button>
               </div>
             </div>
@@ -113,7 +113,7 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
                           <div>
                             <h4 className="font-medium text-sm">{item.name}</h4>
                             <p className="text-xs text-muted-foreground">
-                              Talla: {item.size} • Color: {item.color}
+                              Size: {item.size} • Color: {item.color}
                             </p>
                           </div>
                           <Button
@@ -160,12 +160,12 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
                     <span>${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Envío</span>
-                    <span>{shipping === 0 ? 'Gratis' : `$${shipping.toFixed(2)}`}</span>
+                    <span>Shipping</span>
+                    <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
                   </div>
                   {shipping === 0 && (
                     <p className="text-xs text-green-600">
-                      ¡Envío gratis por compras mayores a $100!
+                      Free shipping on orders over $100!
                     </p>
                   )}
                   <Separator />
@@ -177,14 +177,14 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
 
                 <div className="space-y-2">
                   <Button className="w-full bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
-                    Proceder al Pago
+                    Proceed to Checkout
                   </Button>
                   <Button
                     variant="outline"
                     className="w-full bg-transparent"
                     onClick={() => onOpenChange(false)}
                   >
-                    Continuar Comprando
+                    Continue Shopping
                   </Button>
                 </div>
               </div>
