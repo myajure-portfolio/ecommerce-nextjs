@@ -1,6 +1,7 @@
 import { Header } from '@/components/shared/header';
 import { Footer } from '@/components/shared/footer';
 import { auth } from '@/auth';
+import { getCart } from '@/actions/cart/cart.actions';
 
 const RootLayout = async ({
   children,
@@ -8,10 +9,11 @@ const RootLayout = async ({
   children: React.ReactNode;
 }>) => {
   const session = await auth();
+  const cart = await getCart();
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <Header session={session} />
+      <Header session={session} cart={cart as any} />
       <main>{children}</main>
       <Footer />
     </div>

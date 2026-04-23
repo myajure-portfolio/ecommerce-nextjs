@@ -1,73 +1,52 @@
 'use client';
 
-import { useState } from 'react';
+import { useTransition } from 'react';
 import Image from 'next/image';
 
-import { Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import { Minus, Plus, Trash2, ShoppingBag, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
-
-interface CartItem {
-  id: number;
-  name: string;
-  price: number;
-  image: string;
-  size: string;
-  color: string;
-  quantity: number;
-  category?: string;
-}
+import { removeFromCart, updateCartItemQuantity } from '@/actions/cart/cart.actions';
+import { toast } from 'react-toastify';
 
 interface CartSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  cart?: any;
 }
 
-export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: 'Elegant Summer Dress',
-      price: 89.99,
-      image:
-        'https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg?auto=compress&cs=tinysrgb&w=400',
-      category: 'Dresses',
-      size: 'M',
-      color: 'Blue',
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: 'Classic Denim Jacket',
-      price: 129.99,
-      image:
-        'https://images.pexels.com/photos/1192609/pexels-photo-1192609.jpeg?auto=compress&cs=tinysrgb&w=400',
-      category: 'Jackets',
-      size: 'L',
-      color: 'Blue',
-      quantity: 2,
-    },
-  ]);
+export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange, cart }) => {
+  const [isPending, startTransition] = useTransition();
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity === 0) {
-      setCartItems(items => items.filter(item => item.id !== id));
-    } else {
-      setCartItems(items =>
-        items.map(item => (item.id === id ? { ...item, quantity: newQuantity } : item))
-      );
-    }
+  const cartItems = cart?.items || [];
+
+  const handleUpdateQuantity = (id: string, newQuantity: number) => {
+    startTransition(async () => {
+      if (newQuantity === 0) {
+        const result = await removeFromCart(id);
+        if (result.success) toast.info('Item removed from cart');
+        else toast.error(result.message);
+      } else {
+        const result = await updateCartItemQuantity(id, newQuantity);
+        if (result.success) toast.success('Cart updated');
+        else toast.error(result.message);
+      }
+    });
   };
 
-  const removeItem = (id: number) => {
-    setCartItems(items => items.filter(item => item.id !== id));
+  const handleRemoveItem = (id: string) => {
+    startTransition(async () => {
+      const result = await removeFromCart(id);
+      if (result.success) toast.info('Item removed from cart');
+      else toast.error(result.message);
+    });
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = subtotal > 100 ? 0 : 9.99;
-  const total = subtotal + shipping;
+  const subtotal = Number(cart?.itemsPrice || 0);
+  const shipping = Number(cart?.shippingPrice || 0);
+  const total = Number(cart?.totalPrice || 0);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -77,6 +56,7 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
             <ShoppingBag className="h-5 w-5" />
             Shopping Cart
             <Badge variant="secondary">{cartItems.length}</Badge>
+            {isPending && <Loader2 className="h-4 w-4 animate-spin text-muted-foreground ml-2" />}
           </SheetTitle>
         </SheetHeader>
 
@@ -98,9 +78,9 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
             <>
               <div className="flex-1 overflow-auto py-6">
                 <div className="space-y-6">
-                  {cartItems.map(item => (
+                  {cartItems.map((item: any) => (
                     <div key={item.id} className="flex gap-4">
-                      <div className="relative h-20 w-16 rounded-md overflow-hidden">
+                      <div className="relative h-20 w-16 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 shrink-0">
                         <Image
                           src={item.image || '/placeholder.svg'}
                           alt={item.name}
@@ -111,16 +91,18 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
                       <div className="flex-1 space-y-2">
                         <div className="flex items-start justify-between">
                           <div>
-                            <h4 className="font-medium text-sm">{item.name}</h4>
-                            <p className="text-xs text-muted-foreground">
-                              Size: {item.size} • Color: {item.color}
+                            <h4 className="font-medium text-sm line-clamp-2">{item.name}</h4>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              {item.size && `Size: ${item.size} • `}
+                              ${Number(item.price).toFixed(2)}
                             </p>
                           </div>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
-                            onClick={() => removeItem(item.id)}
+                            className="h-8 w-8 text-muted-foreground hover:text-red-500"
+                            onClick={() => handleRemoveItem(item.id)}
+                            disabled={isPending}
                           >
                             <Trash2 className="h-4 w-4" />
                           </Button>
@@ -131,21 +113,23 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
                               variant="outline"
                               size="icon"
                               className="h-8 w-8 bg-transparent"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              onClick={() => handleUpdateQuantity(item.id, item.qty - 1)}
+                              disabled={isPending}
                             >
                               <Minus className="h-3 w-3" />
                             </Button>
-                            <span className="w-8 text-center text-sm">{item.quantity}</span>
+                            <span className="w-8 text-center text-sm">{item.qty}</span>
                             <Button
                               variant="outline"
                               size="icon"
                               className="h-8 w-8 bg-transparent"
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => handleUpdateQuantity(item.id, item.qty + 1)}
+                              disabled={isPending}
                             >
                               <Plus className="h-3 w-3" />
                             </Button>
                           </div>
-                          <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                          <p className="font-medium">${(Number(item.price) * item.qty).toFixed(2)}</p>
                         </div>
                       </div>
                     </div>
@@ -153,35 +137,35 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange }) => {
                 </div>
               </div>
 
-              <div className="border-t pt-6 space-y-4">
+              <div className="border-t pt-6 space-y-4 shrink-0">
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
-                    <span>Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span className="text-muted-foreground">Subtotal</span>
+                    <span className="font-medium">${subtotal.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span>Shipping</span>
-                    <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+                    <span className="text-muted-foreground">Shipping</span>
+                    <span className="font-medium">{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
                   </div>
                   {shipping === 0 && (
-                    <p className="text-xs text-green-600">
-                      Free shipping on orders over $100!
+                    <p className="text-xs text-green-600 dark:text-green-400">
+                      Free shipping applied to your order!
                     </p>
                   )}
-                  <Separator />
-                  <div className="flex justify-between font-medium">
+                  <Separator className="my-2" />
+                  <div className="flex justify-between font-bold text-lg">
                     <span>Total</span>
                     <span>${total.toFixed(2)}</span>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Button className="w-full bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white">
+                <div className="space-y-2 pt-2">
+                  <Button className="w-full h-12 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold">
                     Proceed to Checkout
                   </Button>
                   <Button
                     variant="outline"
-                    className="w-full bg-transparent"
+                    className="w-full h-12 bg-transparent"
                     onClick={() => onOpenChange(false)}
                   >
                     Continue Shopping
