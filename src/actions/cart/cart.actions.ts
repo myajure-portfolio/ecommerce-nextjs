@@ -12,6 +12,22 @@ async function getCartId() {
   return cookieStore.get('sessionCartId')?.value;
 }
 
+type CartWithItems = NonNullable<Awaited<ReturnType<typeof prisma.cart.findFirst<{ include: { items: true } }>>>>;
+
+function serializeCart(cart: CartWithItems) {
+  return {
+    ...cart,
+    itemsPrice: Number(cart.itemsPrice),
+    shippingPrice: Number(cart.shippingPrice),
+    taxPrice: Number(cart.taxPrice),
+    totalPrice: Number(cart.totalPrice),
+    items: cart.items.map((item) => ({
+      ...item,
+      price: Number(item.price),
+    })),
+  };
+}
+
 const calculateTotals = (items: any[]) => {
   const itemsPrice = items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 9.99;
@@ -57,7 +73,9 @@ export async function getCart() {
     }
   }
 
-  return cart;
+  if (!cart) return null;
+
+  return serializeCart(cart);
 }
 
 export async function addToCart(productId: string, size?: Size) {
@@ -93,7 +111,7 @@ export async function addToCart(productId: string, size?: Size) {
         { price: product.price, qty: 1 },
       ]);
 
-      cart = await prisma.cart.create({
+      const newCart = await prisma.cart.create({
         data: {
           sessionCartId: cartId,
           userId,
@@ -115,6 +133,7 @@ export async function addToCart(productId: string, size?: Size) {
         },
         include: { items: true },
       });
+      cart = serializeCart(newCart);
     } else {
       // Check if item already exists in cart with same size
       const existingItem = cart.items.find(
