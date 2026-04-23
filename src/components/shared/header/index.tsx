@@ -10,6 +10,7 @@ import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetClose } from '@/com
 import { APP_NAME } from '@/lib/constants';
 import { Badge } from '@/components/ui/badge';
 import { UserButton } from './UserButton';
+import { ThemeToggle } from '../ThemeToggle';
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
@@ -42,21 +43,7 @@ const DesktopNav = () => (
   </nav>
 );
 
-const ThemeToggle = ({ className }: { className?: string }) => {
-  const { theme, setTheme } = useTheme();
-  return (
-    <Button
-      variant="ghost"
-      size="icon"
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className={className}
-      aria-label="Toggle theme"
-    >
-      <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-      <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-    </Button>
-  );
-};
+
 
 const CartButton = ({ onClick, count }: { onClick: () => void; count: number }) => (
   <Button
@@ -76,8 +63,6 @@ const CartButton = ({ onClick, count }: { onClick: () => void; count: number }) 
 );
 
 const MobileSheet = ({ session }: { session: any }) => {
-  const { theme, setTheme } = useTheme();
-
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -115,17 +100,7 @@ const MobileSheet = ({ session }: { session: any }) => {
 
         {/* Theme toggle row */}
         <div className="px-5 pb-2">
-          <button
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="flex w-full items-center justify-between h-11 rounded-md px-3 text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-            aria-label="Toggle theme"
-          >
-            <span>{theme === 'dark' ? 'Light mode' : 'Dark mode'}</span>
-            <span className="relative flex h-5 w-5 items-center justify-center">
-              <Sun className="h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-              <Moon className="absolute h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            </span>
-          </button>
+          <ThemeToggle showLabel />
         </div>
 
         {/* User section pushed to bottom */}

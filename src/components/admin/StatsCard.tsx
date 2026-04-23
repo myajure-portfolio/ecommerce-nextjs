@@ -13,8 +13,8 @@ interface StatsCardProps {
 
 const variantStyles = {
   default: {
-    iconBg: 'bg-gray-800',
-    iconColor: 'text-gray-400',
+    iconBg: 'bg-accent',
+    iconColor: 'text-muted-foreground',
     glow: '',
   },
   indigo: {
@@ -52,7 +52,7 @@ export function StatsCard({
   return (
     <div
       className={cn(
-        'relative overflow-hidden rounded-2xl bg-gray-900 border border-gray-800 p-6 flex flex-col gap-4',
+        'relative overflow-hidden rounded-2xl bg-card border border-border p-6 flex flex-col gap-4',
         styles.glow
       )}
     >
@@ -64,7 +64,7 @@ export function StatsCard({
             'bg-linear-to-br from-transparent via-emerald-500 to-transparent',
           variant === 'amber' && 'bg-linear-to-br from-transparent via-amber-500 to-transparent',
           variant === 'rose' && 'bg-linear-to-br from-transparent via-rose-500 to-transparent',
-          variant === 'default' && 'bg-linear-to-br from-transparent via-gray-600 to-transparent'
+          variant === 'default' && 'bg-linear-to-br from-transparent via-border to-transparent'
         )}
       />
 
@@ -92,9 +92,9 @@ export function StatsCard({
       </div>
 
       <div>
-        <p className="text-3xl font-bold text-white tracking-tight">{value}</p>
-        <p className="text-sm font-medium text-gray-400 mt-1">{title}</p>
-        {subtitle && <p className="text-xs text-gray-600 mt-0.5">{subtitle}</p>}
+        <p className="text-3xl font-bold text-foreground tracking-tight">{value}</p>
+        <p className="text-sm font-medium text-muted-foreground mt-1">{title}</p>
+        {subtitle && <p className="text-xs text-muted-foreground/60 mt-0.5">{subtitle}</p>}
       </div>
     </div>
   );

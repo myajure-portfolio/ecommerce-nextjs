@@ -13,37 +13,37 @@ export default async function AdminCategoriesPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">Categories</h1>
-        <p className="text-gray-400 mt-1 text-sm">{categories.length} categories in your store</p>
+        <h1 className="text-2xl font-bold text-foreground tracking-tight">Categories</h1>
+        <p className="text-muted-foreground mt-1 text-sm">{categories.length} categories in your store</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-1">
-          <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 sticky top-24">
-            <h2 className="text-sm font-semibold text-gray-300 uppercase tracking-widest mb-5">New Category</h2>
+          <div className="rounded-2xl bg-card border border-border p-6 sticky top-24 shadow-sm">
+            <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-5">New Category</h2>
             <CreateCategoryForm />
           </div>
         </div>
 
         <div className="lg:col-span-2">
-          <div className="rounded-2xl bg-gray-900 border border-gray-800 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-800">
-              <h2 className="text-sm font-semibold text-gray-300">All Categories</h2>
+          <div className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
+            <div className="px-6 py-4 border-b border-border bg-accent/20">
+              <h2 className="text-sm font-semibold text-foreground">All Categories</h2>
             </div>
-            <div className="divide-y divide-gray-800">
+            <div className="divide-y divide-border">
               {categories.length === 0 && (
-                <div className="px-6 py-12 text-center text-gray-500">No categories found.</div>
+                <div className="px-6 py-12 text-center text-muted-foreground">No categories found.</div>
               )}
               {categories.map(cat => (
-                <div key={cat.id} className="flex items-center justify-between px-6 py-4 hover:bg-gray-800/40 transition-colors">
+                <div key={cat.id} className="flex items-center justify-between px-6 py-4 hover:bg-accent/30 transition-colors">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 bg-gray-800 rounded-lg">
-                      <Tags className="w-4 h-4 text-gray-500" />
+                    <div className="p-2 bg-accent rounded-lg">
+                      <Tags className="w-4 h-4 text-muted-foreground" />
                     </div>
-                    <p className="text-sm font-medium text-gray-200">{cat.name}</p>
+                    <p className="text-sm font-medium text-foreground">{cat.name}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                       <Package className="w-3.5 h-3.5" />
                       <span>{cat.productCount} products</span>
                     </div>

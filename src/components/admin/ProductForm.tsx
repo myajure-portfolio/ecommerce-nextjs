@@ -153,8 +153,8 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           <div className="xl:col-span-2 space-y-6">
             {/* Basic Information */}
-            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-5">
-              <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
+            <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                 Basic Information
               </h3>
               <FormField
@@ -162,9 +162,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-400">Product Name</FormLabel>
+                    <FormLabel className="text-muted-foreground">Product Name</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800 border-gray-700 text-white" />
+                      <Input {...field} className="bg-background border-border text-foreground" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -175,9 +175,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-400">Slug</FormLabel>
+                    <FormLabel className="text-muted-foreground">Slug</FormLabel>
                     <FormControl>
-                      <Input {...field} className="bg-gray-800 border-gray-700 text-white" />
+                      <Input {...field} className="bg-background border-border text-foreground" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -188,11 +188,11 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 name="description"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-400">Description</FormLabel>
+                    <FormLabel className="text-muted-foreground">Description</FormLabel>
                     <FormControl>
                       <Textarea
                         {...field}
-                        className="bg-gray-800 border-gray-700 text-white"
+                        className="bg-background border-border text-foreground"
                         rows={4}
                       />
                     </FormControl>
@@ -203,8 +203,8 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
             </div>
 
             {/* Pricing & Inventory */}
-            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-5">
-              <h3 className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
+            <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
+               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                 Pricing &amp; Inventory
               </h3>
               <div className="grid grid-cols-2 gap-4">
@@ -213,13 +213,13 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                   name="price"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-400">Price (USD)</FormLabel>
+                      <FormLabel className="text-muted-foreground">Price (USD)</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type="number"
                           step="0.01"
-                          className="bg-gray-800 border-gray-700 text-white"
+                          className="bg-background border-border text-foreground"
                         />
                       </FormControl>
                       <FormMessage />
@@ -231,12 +231,12 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                   name="stock"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="text-gray-400">Stock</FormLabel>
+                      <FormLabel className="text-muted-foreground">Stock</FormLabel>
                       <FormControl>
                         <Input
                           {...field}
                           type="number"
-                          className="bg-gray-800 border-gray-700 text-white"
+                          className="bg-background border-border text-foreground"
                         />
                       </FormControl>
                       <FormMessage />
@@ -247,13 +247,13 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
             </div>
 
             {/* Product Images */}
-            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-5">
+            <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
               <FormField
                 control={ctrl}
                 name="images"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
+                    <FormLabel className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                       Product Images
                     </FormLabel>
                     <div className="space-y-4">
@@ -262,7 +262,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                           value={newImageUrl}
                           onChange={e => setNewImageUrl(e.target.value)}
                           placeholder="Image URL"
-                          className="bg-gray-800 border-gray-700 text-white flex-1"
+                          className="bg-background border-border text-foreground flex-1"
                         />
                         <Button
                           type="button"
@@ -273,7 +273,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                             }
                           }}
                           variant="outline"
-                          className="border-gray-700 text-gray-300"
+                          className="border-border text-muted-foreground"
                         >
                           <Plus className="w-4 h-4" />
                         </Button>
@@ -282,7 +282,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                         {(field.value ?? []).map((url: string, i: number) => (
                           <div
                             key={i}
-                            className="relative group rounded-xl overflow-hidden bg-gray-800 aspect-square"
+                            className="relative group rounded-xl overflow-hidden bg-accent aspect-square shadow-sm"
                           >
                             <img src={url} alt="" className="w-full h-full object-cover" />
                             <button
@@ -315,14 +315,14 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 name="categoryId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-400">Category</FormLabel>
+                    <FormLabel className="text-muted-foreground">Category</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value ?? ''}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-background border-border text-foreground">
                           <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-popover border-border text-popover-foreground">
                         {categories.map(cat => (
                           <SelectItem key={cat.id} value={cat.id}>
                             {cat.name}
@@ -339,14 +339,14 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 name="gender"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-gray-400">Gender</FormLabel>
+                    <FormLabel className="text-muted-foreground">Gender</FormLabel>
                     <Select onValueChange={field.onChange} value={field.value ?? ''}>
                       <FormControl>
-                        <SelectTrigger className="bg-gray-800 border-gray-700 text-white">
+                        <SelectTrigger className="bg-background border-border text-foreground">
                           <SelectValue placeholder="Select gender" />
                         </SelectTrigger>
                       </FormControl>
-                      <SelectContent className="bg-gray-800 border-gray-700 text-white">
+                      <SelectContent className="bg-popover border-border text-popover-foreground">
                         {GENDERS.map(g => (
                           <SelectItem key={g} value={g} className="capitalize">
                             {g}
@@ -361,13 +361,13 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
             </div>
 
             {/* Sizes */}
-            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-4">
+            <div className="rounded-2xl bg-card border border-border p-6 space-y-4 shadow-sm">
               <FormField
                 control={ctrl}
                 name="sizes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="text-sm font-semibold text-gray-300 uppercase tracking-widest">
+                    <FormLabel className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                       Available Sizes
                     </FormLabel>
                     <div className="flex flex-wrap gap-2 pt-2">
@@ -389,8 +389,8 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                             className={cn(
                               'w-12 h-9 rounded-lg border text-sm font-medium transition-all',
                               isSelected
-                                ? 'border-indigo-500 bg-indigo-600/20 text-indigo-400'
-                                : 'border-gray-700 bg-gray-800 text-gray-400 hover:border-gray-500 hover:text-gray-300'
+                                ? 'border-primary bg-primary/10 text-primary'
+                                : 'border-border bg-background text-muted-foreground hover:border-muted-foreground hover:text-foreground'
                             )}
                           >
                             {size}
@@ -405,13 +405,13 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
             </div>
 
             {/* Featured */}
-            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-4">
+            <div className="rounded-2xl bg-card border border-border p-6 space-y-4 shadow-sm">
               <FormField
                 control={ctrl}
                 name="isFeatured"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
-                    <FormLabel className="text-gray-300">Featured</FormLabel>
+                    <FormLabel className="text-muted-foreground">Featured</FormLabel>
                     <FormControl>
                       <Switch checked={field.value ?? false} onCheckedChange={field.onChange} />
                     </FormControl>

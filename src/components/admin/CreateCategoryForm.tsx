@@ -29,19 +29,19 @@ export function CreateCategoryForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-2">
-        <label className="text-sm text-gray-400">Category Name</label>
+        <label className="text-sm text-muted-foreground">Category Name</label>
         <Input
           value={name}
           onChange={e => setName(e.target.value)}
           placeholder="e.g. Swimwear"
-          className="bg-gray-800 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-indigo-500"
+          className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-indigo-500"
           disabled={isPending}
         />
       </div>
       <Button
         type="submit"
         disabled={isPending || !name.trim()}
-        className="w-full bg-indigo-600 hover:bg-indigo-700 text-white gap-2"
+        className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
       >
         {isPending ? (
           <Loader2 className="w-4 h-4 animate-spin" />

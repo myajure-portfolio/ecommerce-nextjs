@@ -30,15 +30,15 @@ export function AdminSidebar() {
   };
 
   return (
-    <aside className="hidden lg:flex w-64 flex-col bg-gray-900 border-r border-gray-800 shrink-0">
+    <aside className="hidden lg:flex w-64 flex-col bg-card border-r border-border shrink-0">
       {/* Logo */}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-gray-800">
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-border">
         <div className="p-1.5 bg-indigo-600 rounded-lg">
           <Store className="w-5 h-5 text-white" />
         </div>
         <div>
-          <span className="text-white font-bold text-base tracking-tight">Admin Panel</span>
-          <p className="text-gray-500 text-xs">Management Console</p>
+          <span className="text-foreground font-bold text-base tracking-tight">Admin Panel</span>
+          <p className="text-muted-foreground text-xs">Management Console</p>
         </div>
       </div>
 
@@ -54,30 +54,30 @@ export function AdminSidebar() {
               className={cn(
                 'group flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150',
                 active
-                  ? 'bg-indigo-600/15 text-indigo-400 border border-indigo-600/20'
-                  : 'text-gray-400 hover:bg-gray-800 hover:text-gray-200 border border-transparent'
+                  ? 'bg-primary/10 text-primary border border-primary/20'
+                  : 'text-muted-foreground hover:bg-accent hover:text-foreground border border-transparent'
               )}
             >
               <Icon
                 className={cn(
                   'w-4.5 h-4.5 shrink-0 transition-colors',
-                  active ? 'text-indigo-400' : 'text-gray-500 group-hover:text-gray-300'
+                  active ? 'text-primary' : 'text-muted-foreground group-hover:text-foreground'
                 )}
               />
               <span className="flex-1">{item.label}</span>
-              {active && <ChevronRight className="w-3.5 h-3.5 text-indigo-500" />}
+              {active && <ChevronRight className="w-3.5 h-3.5 text-primary" />}
             </Link>
           );
         })}
       </nav>
 
       {/* Back to Store */}
-      <div className="px-3 py-4 border-t border-gray-800">
+      <div className="px-3 py-4 border-t border-border">
         <Link
           href="/"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:bg-gray-800 hover:text-gray-200 border border-transparent transition-all"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground border border-transparent transition-all"
         >
-          <Store className="w-4.5 h-4.5 text-gray-500" />
+          <Store className="w-4.5 h-4.5 text-muted-foreground" />
           Back to Store
         </Link>
       </div>

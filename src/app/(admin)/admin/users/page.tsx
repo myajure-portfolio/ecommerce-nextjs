@@ -28,8 +28,8 @@ export default async function AdminUsersPage({
     <div className="space-y-6">
       {/* Header */}
       <div>
-        <h1 className="text-2xl font-bold text-white tracking-tight">Users</h1>
-        <p className="text-gray-400 mt-1 text-sm">{count} registered accounts</p>
+        <h1 className="text-2xl font-bold text-foreground tracking-tight">Users</h1>
+        <p className="text-muted-foreground mt-1 text-sm">{count} registered accounts</p>
       </div>
 
       {/* Search */}
@@ -39,37 +39,37 @@ export default async function AdminUsersPage({
           name="q"
           defaultValue={params.q}
           placeholder="Search by name or email..."
-          className="pl-9 bg-gray-900 border-gray-700 text-white placeholder:text-gray-500 focus-visible:ring-indigo-500"
+          className="pl-9 bg-card border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-indigo-500"
         />
       </form>
 
       {/* Table */}
-      <div className="rounded-2xl bg-gray-900 border border-gray-800 overflow-hidden">
+      <div className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-gray-800">
-                <th className="text-left px-6 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-widest">
+              <tr className="border-b border-border bg-accent/20">
+                <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest">
                   User
                 </th>
-                <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-widest hidden md:table-cell">
+                <th className="text-left px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest hidden md:table-cell">
                   Email
                 </th>
-                <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-widest">
+                <th className="text-left px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest">
                   Role
                 </th>
-                <th className="text-left px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-widest hidden lg:table-cell">
+                <th className="text-left px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest hidden lg:table-cell">
                   Joined
                 </th>
-                <th className="px-4 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-widest text-right">
+                <th className="px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest text-right">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-800">
+            <tbody className="divide-y divide-border">
               {users.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-gray-500">
+                  <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
                     No users found.
                   </td>
                 </tr>
@@ -83,7 +83,7 @@ export default async function AdminUsersPage({
                   .slice(0, 2);
 
                 return (
-                  <tr key={user.id} className="hover:bg-gray-800/40 transition-colors">
+                  <tr key={user.id} className="hover:bg-accent/30 transition-colors">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <Avatar className="w-8 h-8">
@@ -93,19 +93,19 @@ export default async function AdminUsersPage({
                           </AvatarFallback>
                         </Avatar>
                         <div>
-                          <p className="font-medium text-gray-200">{user.name}</p>
-                          <p className="text-xs text-gray-500 md:hidden">{user.email}</p>
+                          <p className="font-medium text-foreground">{user.name}</p>
+                          <p className="text-xs text-muted-foreground md:hidden">{user.email}</p>
                         </div>
                       </div>
                     </td>
                     <td className="px-4 py-4 hidden md:table-cell">
-                      <span className="text-gray-400">{user.email}</span>
+                      <span className="text-muted-foreground">{user.email}</span>
                     </td>
                     <td className="px-4 py-4">
                       <UserRoleToggle userId={user.id} currentRole={user.role} />
                     </td>
                     <td className="px-4 py-4 hidden lg:table-cell">
-                      <span className="text-gray-500 text-xs">
+                      <span className="text-muted-foreground/60 text-xs">
                         {new Date(user.createdAt).toLocaleDateString('en-US', {
                           month: 'short',
                           day: 'numeric',
@@ -130,8 +130,8 @@ export default async function AdminUsersPage({
 
         {/* Pagination */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-gray-800">
-            <p className="text-xs text-gray-500">
+          <div className="flex items-center justify-between px-6 py-4 border-t border-border">
+            <p className="text-xs text-muted-foreground">
               Page {currentPage} of {totalPages} · {count} users
             </p>
             <div className="flex gap-2">
@@ -141,8 +141,8 @@ export default async function AdminUsersPage({
                   href={`?${new URLSearchParams({ ...params, page: page.toString() })}`}
                   className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors ${
                     currentPage === page
-                      ? 'bg-indigo-600 text-white'
-                      : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-gray-200'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-accent text-muted-foreground hover:bg-accent/80 hover:text-foreground'
                   }`}
                 >
                   {page}
