@@ -36,7 +36,14 @@ export const updateProduct = async (id: string, data: AdminProductInput) => {
 
     revalidatePath('/admin/products');
     revalidatePath('/products');
-    return { success: true, product };
+    return {
+      success: true,
+      product: {
+        ...product,
+        price: product.price.toString(),
+        rating: product.rating.toString(),
+      }
+    };
   } catch (error: any) {
     return { success: false, message: error.message || 'Failed to update product.' };
   }

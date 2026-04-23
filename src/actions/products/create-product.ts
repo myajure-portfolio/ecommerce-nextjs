@@ -33,7 +33,14 @@ export const createProduct = async (data: AdminProductInput) => {
 
     revalidatePath('/admin/products');
     revalidatePath('/products');
-    return { success: true, product };
+    return {
+      success: true,
+      product: {
+        ...product,
+        price: product.price.toString(),
+        rating: product.rating.toString(),
+      }
+    };
   } catch (error: any) {
     if (error.code === 'P2002') {
       return { success: false, message: 'A product with this slug already exists.' };
