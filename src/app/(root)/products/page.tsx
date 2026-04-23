@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import { getFilteredProducts } from '@/actions/products/get-filtered-products';
-import { getCategories } from '@/actions/products/get-categories';
+import { getCategories } from '@/actions/categories/get-categories';
 import { ProductCard } from '@/components/product/ProductCard';
 import { ProductFilters } from '@/components/shared/products/ProductFilters';
 import { MobileFilters } from '@/components/shared/products/MobileFilters';

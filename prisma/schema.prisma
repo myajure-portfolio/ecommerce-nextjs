@@ -50,6 +50,7 @@ model Product {
 
   category Category @relation(fields: [categoryId], references: [id])
   cartItems CartItem[]
+  orderItems OrderItem[]
 }
 
 model Category {
@@ -81,6 +82,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   carts         Cart[]
+  orders        Order[]
 }
 
 model Account {
@@ -151,4 +153,48 @@ model CartItem {
 
   cart      Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+enum OrderStatus {
+  pending
+  processing
+  shipped
+  delivered
+  cancelled
+}
+
+model Order {
+  id              String      @id @default(uuid()) @db.Uuid
+  userId          String      @db.Uuid
+  shippingAddress Json
+  paymentMethod   String
+  itemsPrice      Decimal     @db.Decimal(12, 2)
+  shippingPrice   Decimal     @db.Decimal(12, 2)
+  taxPrice        Decimal     @db.Decimal(12, 2)
+  totalPrice      Decimal     @db.Decimal(12, 2)
+  isPaid          Boolean     @default(false)
+  paidAt          DateTime?   @db.Timestamp(6)
+  isDelivered     Boolean     @default(false)
+  deliveredAt     DateTime?   @db.Timestamp(6)
+  status          OrderStatus @default(pending)
+  createdAt       DateTime    @default(now()) @db.Timestamp(6)
+  updatedAt       DateTime    @updatedAt @db.Timestamp(6)
+
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid()) @db.Uuid
+  orderId   String  @db.Uuid
+  productId String
+  qty       Int
+  price     Decimal @db.Decimal(12, 2)
+  name      String
+  slug      String
+  image     String
+  size      Size?
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }

@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Badge } from '@/components/ui/badge';
-import { removeFromCart, updateCartItemQuantity } from '@/actions/cart/cart.actions';
+import { removeFromCart } from '@/actions/cart/remove-from-cart';
+import { updateCartItemQuantity } from '@/actions/cart/update-cart-item-quantity';
 import { toast } from 'react-toastify';
 
 interface CartSheetProps {

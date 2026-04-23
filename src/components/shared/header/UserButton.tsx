@@ -95,7 +95,7 @@ const DesktopUserButton = ({ session }: { session: any }) => {
 
         {session?.user?.role === 'admin' && (
           <DropdownMenuItem asChild>
-            <Link href="/admin/overview" className="flex items-center gap-2 cursor-pointer">
+            <Link href="/admin" className="flex items-center gap-2 cursor-pointer">
               <LayoutDashboard className="h-4 w-4" />
               Admin
             </Link>
@@ -189,7 +189,7 @@ const MobileSheetUserButton = ({ session }: { session: any }) => {
       {session?.user?.role === 'admin' && (
         <SheetClose asChild>
           <Link
-            href="/admin/overview"
+            href="/admin"
             className="flex items-center gap-3 h-11 px-3 rounded-md text-base font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           >
             <LayoutDashboard className="h-4 w-4 text-gray-400" />

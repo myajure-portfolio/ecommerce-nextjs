@@ -6,7 +6,7 @@ import { FeaturedProducts } from '@/components/shared/products/FeaturedProducts'
 import { Features } from '@/components/shared/products/Features';
 import { Newsletter } from '@/components/shared/products/Newsletter';
 import { Testimonials } from '@/components/shared/products/Testimonials';
-import { getLatestProducts } from '@/actions/products/get-products';
+import { getLatestProducts } from '@/actions/products/get-latest-products';
 
 export const metadata: Metadata = {
   title: 'Home',

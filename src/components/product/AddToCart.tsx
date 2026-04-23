@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react';
 import { ShoppingCart, Heart, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Size } from '@/generated/prisma/client';
-import { addToCart } from '@/actions/cart/cart.actions';
+import { addToCart } from '@/actions/cart/add-to-cart';
 import { toast } from 'react-toastify';
 
 interface AddToCartProps {

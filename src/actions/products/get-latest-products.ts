@@ -1,15 +1,12 @@
-import { LATEST_PRODUCTS_LIMIT } from '@/lib/constants';
+'use server';
+
 import { prisma } from '@/lib/prisma';
+import { LATEST_PRODUCTS_LIMIT } from '@/lib/constants';
 
 export const getLatestProducts = async () => {
   const products = await prisma.product.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    include: {
-      images: true,
-      category: true,
-    },
+    orderBy: { createdAt: 'desc' },
+    include: { images: true, category: true },
     take: LATEST_PRODUCTS_LIMIT,
   });
 

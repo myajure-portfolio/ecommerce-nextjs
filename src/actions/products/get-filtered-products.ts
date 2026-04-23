@@ -6,11 +6,11 @@ import { Prisma, Gender, Size } from '@/generated/prisma/client';
 export interface GetProductsParams {
   q?: string;
   category?: string;
-  gender?: string; // comma separated
-  size?: string; // comma separated
+  gender?: string;
+  size?: string;
   minPrice?: string;
   maxPrice?: string;
-  sort?: string; // 'newest', 'lowest', 'highest', 'rating'
+  sort?: string;
   page?: string;
   limit?: string;
 }
@@ -73,19 +73,11 @@ export const getFilteredProducts = async ({
     let orderBy: Prisma.ProductOrderByWithRelationInput = { createdAt: 'desc' };
 
     switch (sort) {
-      case 'lowest':
-        orderBy = { price: 'asc' };
-        break;
-      case 'highest':
-        orderBy = { price: 'desc' };
-        break;
-      case 'rating':
-        orderBy = { rating: 'desc' };
-        break;
+      case 'lowest': orderBy = { price: 'asc' }; break;
+      case 'highest': orderBy = { price: 'desc' }; break;
+      case 'rating': orderBy = { rating: 'desc' }; break;
       case 'newest':
-      default:
-        orderBy = { createdAt: 'desc' };
-        break;
+      default: orderBy = { createdAt: 'desc' }; break;
     }
 
     const [products, count] = await Promise.all([
@@ -116,11 +108,6 @@ export const getFilteredProducts = async ({
     };
   } catch (error) {
     console.error('Error getting filtered products:', error);
-    return {
-      products: [],
-      totalPages: 0,
-      count: 0,
-      currentPage: 1,
-    };
+    return { products: [], totalPages: 0, count: 0, currentPage: 1 };
   }
 };

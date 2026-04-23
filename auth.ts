@@ -4,7 +4,7 @@ import { PrismaAdapter } from '@auth/prisma-adapter';
 import Credentials from 'next-auth/providers/credentials';
 import { compareSync } from 'bcryptjs';
 import { ZodError } from 'zod';
-import { getUserByEmail } from '@/actions/users/get-user';
+import { getUserByEmail } from '@/actions/users/get-user-by-email';
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma),

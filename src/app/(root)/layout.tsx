@@ -1,7 +1,7 @@
 import { Header } from '@/components/shared/header';
 import { Footer } from '@/components/shared/footer';
 import { auth } from '@/auth';
-import { getCart } from '@/actions/cart/cart.actions';
+import { getCart } from '@/actions/cart/get-cart';
 
 const RootLayout = async ({
   children,
