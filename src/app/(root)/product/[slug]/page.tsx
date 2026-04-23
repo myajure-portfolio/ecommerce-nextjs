@@ -59,12 +59,19 @@ export default async function ProductDetailsPage({
             {/* Category & Title */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
-                <Badge
-                  variant="secondary"
-                  className="bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 hover:bg-indigo-100 uppercase tracking-wide text-xs"
-                >
-                  {product.category}
-                </Badge>
+                <div className="flex items-center gap-2">
+                  <Badge
+                    variant="secondary"
+                    className="bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 hover:bg-indigo-100 uppercase tracking-wide text-xs"
+                  >
+                    {product.category}
+                  </Badge>
+                  <Badge
+                    className="bg-gray-900 hover:bg-gray-800 text-white dark:bg-white dark:hover:bg-gray-100 dark:text-gray-900 uppercase tracking-widest text-[10px] font-bold px-2.5 py-1 border-transparent shadow-sm"
+                  >
+                    {product.gender}
+                  </Badge>
+                </div>
                 <div className="flex items-center text-yellow-500 text-sm font-medium">
                   <Star className="w-4 h-4 fill-current mr-1" />
                   <span>{product.rating}</span>

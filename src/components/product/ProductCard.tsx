@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Heart, ArrowRight } from 'lucide-react';
@@ -9,6 +11,16 @@ interface IProductCardProps {
 
 export const ProductCard: React.FC<IProductCardProps> = ({ product }) => {
   const isOutOfStock = product.stock === 0;
+
+  const getCategoryColor = (category: string) => {
+    const normalized = category.toLowerCase();
+    if (normalized.includes('shirt') || normalized.includes('top')) return 'bg-blue-600 text-white dark:bg-blue-500';
+    if (normalized.includes('pant') || normalized.includes('jean')) return 'bg-emerald-600 text-white dark:bg-emerald-500';
+    if (normalized.includes('shoe') || normalized.includes('sneaker')) return 'bg-orange-600 text-white dark:bg-orange-500';
+    if (normalized.includes('hat') || normalized.includes('cap') || normalized.includes('accessor')) return 'bg-purple-600 text-white dark:bg-purple-500';
+    if (normalized.includes('jacket') || normalized.includes('coat')) return 'bg-rose-600 text-white dark:bg-rose-500';
+    return 'bg-indigo-600 text-white dark:bg-indigo-500'; // Vibrant default
+  };
 
   return (
     <div className="group relative bg-white dark:bg-gray-900 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] transition-all duration-500 overflow-hidden border border-gray-100 dark:border-gray-800 flex flex-col hover:-translate-y-1">
@@ -25,7 +37,7 @@ export const ProductCard: React.FC<IProductCardProps> = ({ product }) => {
 
         {/* Floating Tags */}
         <div className="absolute top-4 left-4 z-10 flex flex-col gap-2">
-          <span className="px-3 py-1 bg-white/90 dark:bg-black/80 backdrop-blur-md text-xs font-semibold text-gray-900 dark:text-white uppercase tracking-wider rounded-full shadow-xs w-fit">
+          <span className={`px-3 py-1.5 text-xs font-bold uppercase tracking-wider rounded-md shadow-md w-fit ${getCategoryColor(product.category)}`}>
             {product.category}
           </span>
           {isOutOfStock && (

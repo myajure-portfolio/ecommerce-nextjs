@@ -63,12 +63,12 @@ export function AddToCart({ productId, stock, sizes }: AddToCartProps) {
       )}
 
       {/* Actions */}
-      <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-8">
+      <div className="flex flex-row gap-3 sm:gap-4 mt-auto pt-6 sm:pt-8">
         <Button
           size="lg"
           onClick={handleAddToCart}
           disabled={stock === 0 || isPending}
-          className="flex-1 h-14 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-lg font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 h-14 bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-base sm:text-lg font-semibold rounded-xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {isPending ? (
             <Loader2 className="w-5 h-5 mr-2 animate-spin" />
@@ -80,7 +80,7 @@ export function AddToCart({ productId, stock, sizes }: AddToCartProps) {
         <Button
           size="lg"
           variant="outline"
-          className="h-14 w-full sm:w-14 shrink-0 rounded-xl border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-red-500 dark:hover:text-red-400 transition-colors"
+          className="h-14 w-14 shrink-0 rounded-xl border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 hover:text-red-500 dark:hover:text-red-400 transition-colors"
           aria-label="Add to wishlist"
         >
           <Heart className="w-6 h-6" />
