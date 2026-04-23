@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { ProductCard } from './ProductCard';
 import { IProduct } from '@/interfaces';
 import { Button } from '@/components/ui/button';
+import { ProductCard } from '@/components/product/ProductCard';
 
 interface IFeaturedProductsProps {
   products: IProduct[];

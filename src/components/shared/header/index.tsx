@@ -9,8 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetClose } from '@/components/ui/sheet';
 import { APP_NAME } from '@/lib/constants';
 import { Badge } from '@/components/ui/badge';
-import { UserButton } from './user-button';
-
+import { UserButton } from './UserButton';
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [

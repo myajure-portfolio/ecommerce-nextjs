@@ -3,9 +3,8 @@ import { notFound } from 'next/navigation';
 import { ShoppingCart, Heart, Star, Truck, Shield, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { getProductBySlug } from '@/actions/products/get-product-by-slug';
-import { ProductGallery } from '@/components/product/product-gallery';
-import { AddToCart } from '@/components/product/add-to-cart';
-import { Button } from '@/components/ui/button';
+import { ProductGallery } from '@/components/product/ProductGallery';
+import { AddToCart } from '@/components/product/AddToCart';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 
@@ -42,7 +41,6 @@ export default async function ProductDetailsPage({
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        
         {/* Breadcrumb / Back */}
         <Link
           href="/"
@@ -61,13 +59,18 @@ export default async function ProductDetailsPage({
             {/* Category & Title */}
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
-                <Badge variant="secondary" className="bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 hover:bg-indigo-100 uppercase tracking-wide text-xs">
+                <Badge
+                  variant="secondary"
+                  className="bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 hover:bg-indigo-100 uppercase tracking-wide text-xs"
+                >
                   {product.category}
                 </Badge>
                 <div className="flex items-center text-yellow-500 text-sm font-medium">
                   <Star className="w-4 h-4 fill-current mr-1" />
                   <span>{product.rating}</span>
-                  <span className="text-gray-400 dark:text-gray-500 ml-1">({product.numReviews} reviews)</span>
+                  <span className="text-gray-400 dark:text-gray-500 ml-1">
+                    ({product.numReviews} reviews)
+                  </span>
                 </div>
               </div>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white tracking-tight mb-4">
@@ -77,7 +80,7 @@ export default async function ProductDetailsPage({
               <div className="relative overflow-hidden rounded-2xl bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.1)] p-6">
                 {/* Decorative subtle gradient background */}
                 <div className="absolute -top-24 -right-24 w-48 h-48 bg-linear-to-br from-blue-400/20 to-indigo-400/20 dark:from-blue-600/10 dark:to-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
-                
+
                 <div className="relative z-10">
                   <div className="flex items-center gap-3 mb-3">
                     {product.stock > 0 ? (
@@ -96,14 +99,16 @@ export default async function ProductDetailsPage({
                       </div>
                     )}
                   </div>
-                  
+
                   <div className="flex items-baseline gap-2">
                     <span className="text-5xl font-extrabold tracking-tighter text-gray-900 dark:text-white">
                       ${product.price}
                     </span>
-                    <span className="text-sm font-semibold text-gray-400 dark:text-gray-500">USD</span>
+                    <span className="text-sm font-semibold text-gray-400 dark:text-gray-500">
+                      USD
+                    </span>
                   </div>
-                  
+
                   <p className="mt-2 text-sm font-medium text-gray-500 dark:text-gray-400">
                     Local taxes included (where applicable).
                   </p>
@@ -128,8 +133,12 @@ export default async function ProductDetailsPage({
                   <Truck className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">Free Shipping</span>
-                  <span className="text-xs text-gray-500 dark:text-gray-400">On orders over $100</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    Free Shipping
+                  </span>
+                  <span className="text-xs text-gray-500 dark:text-gray-400">
+                    On orders over $100
+                  </span>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -137,12 +146,13 @@ export default async function ProductDetailsPage({
                   <Shield className="w-5 h-5" />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium text-gray-900 dark:text-white">Secure Payment</span>
+                  <span className="text-sm font-medium text-gray-900 dark:text-white">
+                    Secure Payment
+                  </span>
                   <span className="text-xs text-gray-500 dark:text-gray-400">100% protected</span>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
