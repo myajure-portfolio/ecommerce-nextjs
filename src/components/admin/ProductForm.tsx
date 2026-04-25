@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/form';
 import { createProduct } from '@/actions/products/create-product';
 import { updateProduct } from '@/actions/products/update-product';
-import { toast } from 'react-toastify';
+import { notifications } from '@/lib/toast';
 import { cn } from '@/lib/utils';
 import { productSchema, type ProductFormValues } from '@/lib/validators/product';
 import type { Category } from '@/interfaces';
@@ -85,15 +85,15 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
           : await createProduct(payload);
 
         if (result.success) {
-          toast.success(isEdit ? 'Product updated!' : 'Product created!');
+          notifications.success(isEdit ? 'Product updated!' : 'Product created!');
           router.push('/admin/products');
           router.refresh();
         } else {
-          toast.error(result.message || 'Error saving product');
+          notifications.error(result.message || 'Error saving product');
         }
       } catch (err) {
         console.error('Submit error:', err);
-        toast.error('An unexpected error occurred. Check the console for details.');
+        notifications.error('An unexpected error occurred. Check the console for details.');
       }
     });
   };
@@ -107,7 +107,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
             console.warn('Validation errors:', errors);
             const firstError = Object.values(errors)[0];
             const msg = (firstError as { message?: string })?.message || 'Please fill in all required fields';
-            toast.error(msg);
+            notifications.error(msg);
           }
         )}
         className="space-y-8"

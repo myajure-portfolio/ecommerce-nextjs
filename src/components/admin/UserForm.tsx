@@ -34,7 +34,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { createUser, updateUser } from '@/actions/users/manage-user';
 import { adminUserInputSchema, updateUserSchema } from '@/lib/validators/user';
-import { toast } from 'react-toastify';
+import { notifications } from '@/lib/toast';
 import type { UserSummary } from '@/interfaces';
 import { z } from 'zod';
 
@@ -65,25 +65,25 @@ export function UserForm({ user, isEdit = false }: UserFormProps) {
         if (isEdit && user?.id) {
           const result = await updateUser(user.id, values);
           if (result.success) {
-            toast.success('¡Usuario actualizado correctamente!');
+            notifications.success('¡Usuario actualizado correctamente!');
             router.push('/admin/users');
             router.refresh();
           } else {
-            toast.error(result.message || 'Error al actualizar el usuario');
+            notifications.error(result.message || 'Error al actualizar el usuario');
           }
         } else {
           const result = await createUser(values as z.infer<typeof adminUserInputSchema>);
           if (result.success) {
-            toast.success('¡Usuario creado correctamente!');
+            notifications.success('¡Usuario creado correctamente!');
             router.push('/admin/users');
             router.refresh();
           } else {
-            toast.error(result.message || 'Error al crear el usuario');
+            notifications.error(result.message || 'Error al crear el usuario');
           }
         }
       } catch (err) {
         console.error('Submit error:', err);
-        toast.error('Ocurrió un error inesperado');
+        notifications.error('Ocurrió un error inesperado');
       }
     });
   };

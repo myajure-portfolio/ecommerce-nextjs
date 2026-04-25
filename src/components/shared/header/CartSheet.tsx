@@ -1,6 +1,7 @@
 'use client';
 
 import { useTransition } from 'react';
+import React from 'react';
 import Image from 'next/image';
 
 import { Minus, Plus, Trash2, ShoppingBag, Loader2 } from 'lucide-react';
@@ -10,19 +11,8 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Badge } from '@/components/ui/badge';
 import { removeFromCart } from '@/actions/cart/remove-from-cart';
 import { updateCartItemQuantity } from '@/actions/cart/update-cart-item-quantity';
-import { toast } from 'react-toastify';
-import type { Cart } from '@/interfaces';
-
-interface CartItem {
-  id: string;
-  productId: string;
-  qty: number;
-  price: number;
-  name: string;
-  slug: string;
-  image: string;
-  size: string | null;
-}
+import { notifications } from '@/lib/toast';
+import type { Cart, CartItem } from '@/interfaces';
 
 interface CartSheetProps {
   open: boolean;
@@ -39,12 +29,12 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange, cart }
     startTransition(async () => {
       if (newQuantity === 0) {
         const result = await removeFromCart(id);
-        if (result.success) toast.info('Item removed from cart');
-        else toast.error(result.message);
+        if (result.success) notifications.info('Item removed from cart');
+        else notifications.error(result.message || 'Error removing item');
       } else {
         const result = await updateCartItemQuantity(id, newQuantity);
-        if (result.success) toast.success('Cart updated');
-        else toast.error(result.message);
+        if (result.success) notifications.success('Cart updated');
+        else notifications.error(result.message || 'Error updating cart');
       }
     });
   };
@@ -52,8 +42,8 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange, cart }
   const handleRemoveItem = (id: string) => {
     startTransition(async () => {
       const result = await removeFromCart(id);
-      if (result.success) toast.info('Item removed from cart');
-      else toast.error(result.message);
+      if (result.success) notifications.info('Item removed from cart');
+      else notifications.error(result.message || 'Error removing item');
     });
   };
 

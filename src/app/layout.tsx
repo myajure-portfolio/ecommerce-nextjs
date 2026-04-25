@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           disableTransitionOnChange
         >
           {children}
-          <ToastContainer position="bottom-right" />
+          <ToastContainer position="top-right" />
         </ThemeProvider>
       </body>
     </html>
