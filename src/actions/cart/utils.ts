@@ -1,5 +1,4 @@
 import { cookies } from 'next/headers';
-import { prisma } from '@/lib/prisma';
 
 export async function getCartId() {
   const cookieStore = await cookies();
@@ -11,8 +10,16 @@ interface CartItemInput {
   qty: number;
 }
 
-export type CartWithItems = Awaited<ReturnType<typeof prisma.cart.findFirst>> &
-  Required<Pick<Awaited<ReturnType<typeof prisma.cart.findFirst>>, 'items'>>;
+interface CartItemData {
+  id: string;
+  productId: string;
+  qty: number;
+  price: unknown;
+  name: string;
+  slug: string;
+  image: string;
+  size: string | null;
+}
 
 interface SerializeCartInput {
   id: string;
@@ -22,16 +29,7 @@ interface SerializeCartInput {
   shippingPrice: unknown;
   taxPrice: unknown;
   totalPrice: unknown;
-  items: Array<{
-    id: string;
-    productId: string;
-    qty: number;
-    price: unknown;
-    name: string;
-    slug: string;
-    image: string;
-    size: string | null;
-  }>;
+  items: CartItemData[];
 }
 
 export function serializeCart(cart: SerializeCartInput) {

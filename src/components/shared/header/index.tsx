@@ -10,7 +10,21 @@ import { APP_NAME } from '@/lib/constants';
 import { Badge } from '@/components/ui/badge';
 import { UserButton } from './UserButton';
 import { ThemeToggle } from '../ThemeToggle';
-import type { Session, Cart, CartItem } from '@/interfaces';
+import type { Session as NextAuthSession } from 'next-auth';
+import type { Cart } from '@/interfaces';
+
+interface CartItem {
+  id: string;
+  productId: string;
+  qty: number;
+  price: number;
+  name: string;
+  slug: string;
+  image: string;
+  size: string | null;
+}
+
+type Session = NextAuthSession;
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [

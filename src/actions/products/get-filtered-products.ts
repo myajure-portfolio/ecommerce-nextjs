@@ -98,8 +98,8 @@ export const getFilteredProducts = async ({
       products: products.map(product => ({
         ...product,
         images: product.images.map(img => img.url),
-        price: Number(product.price),
-        rating: Number(product.rating),
+        price: product.price.toString(),
+        rating: product.rating.toString(),
         category: product.category.name,
       })),
       totalPages: Math.ceil(count / limitNumber),

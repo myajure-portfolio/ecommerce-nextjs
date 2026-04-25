@@ -1,29 +1,61 @@
 'use server';
 
 import { prisma } from '@/lib/prisma';
+import { Gender } from '@/generated/prisma/client';
+
+interface GetAdminProductsParams {
+  q?: string;
+  page?: string;
+  limit?: string;
+  category?: string;
+  gender?: string;
+  inStock?: string;
+}
 
 export const getAdminProducts = async ({
   q = '',
   page = '1',
   limit = '10',
-}: {
-  q?: string;
-  page?: string;
-  limit?: string;
-}) => {
+  category,
+  gender,
+  inStock,
+}: GetAdminProductsParams) => {
   try {
     const pageNumber = Number(page) || 1;
     const limitNumber = Number(limit) || 10;
     const skip = (pageNumber - 1) * limitNumber;
 
-    const where = q
-      ? {
-          OR: [
-            { name: { contains: q, mode: 'insensitive' } },
-            { category: { name: { contains: q, mode: 'insensitive' } } },
-          ],
-        }
-      : {};
+    const where: {
+      OR?: Array<{ name?: { contains: string; mode: 'insensitive' }; slug?: { contains: string; mode: 'insensitive' } }>;
+      categoryId?: string;
+      gender?: Gender;
+      stock?: number | { gte: number } | { gt: number; lte: number };
+    } = {};
+
+    if (q) {
+      where.OR = [
+        { name: { contains: q, mode: 'insensitive' } },
+        { slug: { contains: q, mode: 'insensitive' } },
+      ];
+    }
+
+    if (category && category !== 'all') {
+      where.categoryId = category;
+    }
+
+    if (gender && gender !== 'all') {
+      where.gender = gender as Gender;
+    }
+
+    if (inStock && inStock !== 'all') {
+      if (inStock === 'in') {
+        where.stock = { gte: 6 };
+      } else if (inStock === 'low') {
+        where.stock = { gt: 0, lte: 5 };
+      } else if (inStock === 'out') {
+        where.stock = 0;
+      }
+    }
 
     const [products, count] = await Promise.all([
       prisma.product.findMany({

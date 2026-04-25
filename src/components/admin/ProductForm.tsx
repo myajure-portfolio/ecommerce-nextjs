@@ -82,7 +82,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
   const [newImageUrl, setNewImageUrl] = useState('');
 
   const form = useForm<ProductFormValues>({
-    resolver: zodResolver(productSchema),
+    resolver: zodResolver(productSchema) as any,
     defaultValues: {
       name: initialData?.name ?? '',
       slug: initialData?.slug ?? '',

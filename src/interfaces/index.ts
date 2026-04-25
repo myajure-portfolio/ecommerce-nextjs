@@ -1,3 +1,5 @@
+export type { IProduct } from './product';
+
 export interface CartItem {
   id: string;
   productId: string;
@@ -18,17 +20,6 @@ export interface Cart {
   taxPrice: number;
   totalPrice: number;
   items: CartItem[];
-}
-
-export interface User {
-  id: string;
-  name: string | null;
-  email: string;
-  role: string;
-}
-
-export interface Session {
-  user?: User;
 }
 
 export interface ProductSummary {

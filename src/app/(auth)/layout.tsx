@@ -1,6 +1,8 @@
 import { auth } from '@/auth';
 import { Header } from '@/components/shared/header';
 import { Footer } from '@/components/shared/footer';
+import type { Session as NextAuthSession } from 'next-auth';
+import type { Cart } from '@/interfaces';
 
 const AuthLayout = async ({
   children,
@@ -11,7 +13,7 @@ const AuthLayout = async ({
 
   return (
     <div className="min-h-screen bg-background">
-      <Header session={session} />
+      <Header session={session as NextAuthSession | null} cart={undefined} />
       <main className="container mx-auto px-4 py-16">{children}</main>
       <Footer />
     </div>

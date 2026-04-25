@@ -11,7 +11,18 @@ import { Badge } from '@/components/ui/badge';
 import { removeFromCart } from '@/actions/cart/remove-from-cart';
 import { updateCartItemQuantity } from '@/actions/cart/update-cart-item-quantity';
 import { toast } from 'react-toastify';
-import type { Cart, CartItem } from '@/interfaces';
+import type { Cart } from '@/interfaces';
+
+interface CartItem {
+  id: string;
+  productId: string;
+  qty: number;
+  price: number;
+  name: string;
+  slug: string;
+  image: string;
+  size: string | null;
+}
 
 interface CartSheetProps {
   open: boolean;

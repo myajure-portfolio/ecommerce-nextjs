@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SheetClose } from '@/components/ui/sheet';
 import { logout } from '@/actions/auth/logout';
-import type { Session } from '@/interfaces';
+import type { Session as NextAuthSession } from 'next-auth';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface UserButtonProps {
-  session?: Session | null;
+  session?: NextAuthSession | null;
   isMobileSheet?: boolean;
 }
 
@@ -30,7 +30,7 @@ const UserAvatar = ({ initial }: { initial: string }) => (
 
 // ─── Desktop variant ──────────────────────────────────────────────────────────
 
-const DesktopUserButton = ({ session }: { session?: Session | null }) => {
+const DesktopUserButton = ({ session }: { session?: NextAuthSession | null }) => {
   if (!session) {
     return (
       <div className="flex items-center space-x-2">
@@ -123,7 +123,7 @@ const DesktopUserButton = ({ session }: { session?: Session | null }) => {
 
 // ─── Mobile Sheet variant ─────────────────────────────────────────────────────
 
-const MobileSheetUserButton = ({ session }: { session?: Session | null }) => {
+const MobileSheetUserButton = ({ session }: { session?: NextAuthSession | null }) => {
   if (!session) {
     return (
       <div className="flex flex-col space-y-2">
