@@ -1,157 +1,41 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { Search } from 'lucide-react';
+import { UserPlus } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import { getAdminUsers } from '@/actions/users/get-admin-users';
-import { deleteUser } from '@/actions/users/delete-user';
-import { DeleteUserButton } from '@/components/admin/DeleteUserButton';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
-import { UserRoleToggle } from '@/components/admin/UserRoleToggle';
+import { AdminUsersClient } from '@/components/admin/AdminUsersClient';
 
 export const metadata: Metadata = { title: 'Users — Admin' };
 
-interface SearchParams {
-  q?: string;
-  page?: string;
+interface PageProps {
+  searchParams: Promise<{ q?: string; page?: string }>;
 }
 
-export default async function AdminUsersPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
+export default async function AdminUsersPage({ searchParams }: PageProps) {
   const params = await searchParams;
   const { users, count, totalPages, currentPage } = await getAdminUsers(params);
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-foreground tracking-tight">Users</h1>
-        <p className="text-muted-foreground mt-1 text-sm">{count} registered accounts</p>
-      </div>
-
-      {/* Search */}
-      <form method="GET" className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-        <Input
-          name="q"
-          defaultValue={params.q}
-          placeholder="Search by name or email..."
-          className="pl-9 bg-card border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-indigo-500"
-        />
-      </form>
-
-      {/* Table */}
-      <div className="rounded-2xl bg-card border border-border overflow-hidden shadow-sm">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b border-border bg-accent/20">
-                <th className="text-left px-6 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-                  User
-                </th>
-                <th className="text-left px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest hidden md:table-cell">
-                  Email
-                </th>
-                <th className="text-left px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-                  Role
-                </th>
-                <th className="text-left px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest hidden lg:table-cell">
-                  Joined
-                </th>
-                <th className="px-4 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-widest text-right">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border">
-              {users.length === 0 && (
-                <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-muted-foreground">
-                    No users found.
-                  </td>
-                </tr>
-              )}
-              {users.map(user => {
-                const initials = user.name
-                  .split(' ')
-                  .map((n: string) => n[0])
-                  .join('')
-                  .toUpperCase()
-                  .slice(0, 2);
-
-                return (
-                  <tr key={user.id} className="hover:bg-accent/30 transition-colors">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <Avatar className="w-8 h-8">
-                          <AvatarImage src={user.image ?? ''} />
-                          <AvatarFallback className="text-xs bg-indigo-700 text-white font-semibold">
-                            {initials}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <p className="font-medium text-foreground">{user.name}</p>
-                          <p className="text-xs text-muted-foreground md:hidden">{user.email}</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-4 py-4 hidden md:table-cell">
-                      <span className="text-muted-foreground">{user.email}</span>
-                    </td>
-                    <td className="px-4 py-4">
-                      <UserRoleToggle userId={user.id} currentRole={user.role} />
-                    </td>
-                    <td className="px-4 py-4 hidden lg:table-cell">
-                      <span className="text-muted-foreground/60 text-xs">
-                        {new Date(user.createdAt).toLocaleDateString('en-US', {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </span>
-                    </td>
-                    <td className="px-4 py-4">
-                      <div className="flex justify-end">
-                        <DeleteUserButton 
-                          userId={user.id} 
-                          description={`This will permanently delete "${user.name}" and all their data. This cannot be undone.`}
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Users</h1>
+          <p className="text-muted-foreground mt-1 text-sm">{count} registered accounts</p>
         </div>
-
-        {/* Pagination */}
-        {totalPages > 1 && (
-          <div className="flex items-center justify-between px-6 py-4 border-t border-border">
-            <p className="text-xs text-muted-foreground">
-              Page {currentPage} of {totalPages} · {count} users
-            </p>
-            <div className="flex gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
-                <Link
-                  key={page}
-                  href={`?${new URLSearchParams({ ...params, page: page.toString() })}`}
-                  className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors ${
-                    currentPage === page
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-accent text-muted-foreground hover:bg-accent/80 hover:text-foreground'
-                  }`}
-                >
-                  {page}
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
+        <Link href="/admin/users/new">
+          <Button className="gap-2">
+            <UserPlus className="w-4 h-4" />
+            New User
+          </Button>
+        </Link>
       </div>
+
+      <AdminUsersClient
+        initialUsers={users}
+        initialCount={count}
+        initialTotalPages={totalPages}
+        initialCurrentPage={currentPage}
+      />
     </div>
   );
 }

@@ -39,3 +39,18 @@ export interface Category {
 export interface AdminCategory extends Category {
   productCount?: number;
 }
+
+export type UserRole = 'user' | 'admin';
+
+export interface UserSummary {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+  image?: string | null;
+  createdAt: Date;
+}
+
+export interface UserWithStats extends UserSummary {
+  cartCount: number;
+}

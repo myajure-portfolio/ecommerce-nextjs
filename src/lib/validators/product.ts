@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import z from 'zod';
 
 export const GENDERS = ['men', 'women', 'kid', 'unisex'] as const;
 export const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'] as const;
