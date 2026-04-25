@@ -307,7 +307,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
 
           <div className="space-y-6">
             {/* Category & Gender */}
-            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-5">
+            <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
               <FormField
                 control={ctrl}
                 name="categoryId"

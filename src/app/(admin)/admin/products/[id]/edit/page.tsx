@@ -20,10 +20,10 @@ export default async function EditProductPage({ params }: { params: Promise<{ id
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-4">
-        <Link href="/admin/products" className="p-2 rounded-lg hover:bg-gray-800 text-gray-400 hover:text-gray-200"><ArrowLeft className="w-5 h-5" /></Link>
+        <Link href="/admin/products" className="p-2 rounded-lg hover:bg-accent text-muted-foreground hover:text-foreground"><ArrowLeft className="w-5 h-5" /></Link>
         <div>
-          <h1 className="text-2xl font-bold text-white tracking-tight">Edit Product</h1>
-          <p className="text-gray-400 mt-1 text-sm truncate max-w-md">{product.name}</p>
+          <h1 className="text-2xl font-bold text-foreground tracking-tight">Edit Product</h1>
+          <p className="text-muted-foreground mt-1 text-sm truncate max-w-md">{product.name}</p>
         </div>
       </div>
       <ProductForm
