@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
+import Link from 'next/link';
 import { getAdminCategories } from '@/actions/categories/get-admin-categories';
 import { deleteCategory } from '@/actions/categories/delete-category';
 import { DeleteCategoryButton } from '@/components/admin/DeleteCategoryButton';
 import { CreateCategoryForm } from '@/components/admin/CreateCategoryForm';
-import { Tags, Package } from 'lucide-react';
+import { Tags, Package, ExternalLink } from 'lucide-react';
 
 export const metadata: Metadata = { title: 'Categories — Admin' };
 
@@ -35,18 +36,27 @@ export default async function AdminCategoriesPage() {
                 <div className="px-6 py-12 text-center text-muted-foreground">No categories found.</div>
               )}
               {categories.map(cat => (
-                <div key={cat.id} className="flex items-center justify-between px-6 py-4 hover:bg-accent/30 transition-colors">
+                <div key={cat.id} className="flex items-center justify-between px-6 py-4 hover:bg-accent/30 transition-colors group">
                   <div className="flex items-center gap-3">
                     <div className="p-2 bg-accent rounded-lg">
                       <Tags className="w-4 h-4 text-muted-foreground" />
                     </div>
-                    <p className="text-sm font-medium text-foreground">{cat.name}</p>
+                    <Link
+                      href={`/admin/products?category=${cat.id}`}
+                      className="text-sm font-medium text-foreground hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors flex items-center gap-1.5"
+                    >
+                      {cat.name}
+                      <ExternalLink className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    </Link>
                   </div>
                   <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <Link
+                      href={`/admin/products?category=${cat.id}`}
+                      className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
                       <Package className="w-3.5 h-3.5" />
                       <span>{cat.productCount} products</span>
-                    </div>
+                    </Link>
                     <DeleteCategoryButton
                       categoryId={cat.id}
                       description={
