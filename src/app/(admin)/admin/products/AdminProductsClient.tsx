@@ -17,11 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { cn } from '@/lib/utils';
-
-interface Category {
-  id: string;
-  name: string;
-}
+import type { Category } from '@/interfaces';
 
 interface Product {
   id: string;

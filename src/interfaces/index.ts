@@ -30,3 +30,12 @@ export interface ProductSummary {
   category: string;
   images: string[];
 }
+
+export interface Category {
+  id: string;
+  name: string;
+}
+
+export interface AdminCategory extends Category {
+  productCount?: number;
+}

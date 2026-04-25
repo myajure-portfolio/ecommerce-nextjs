@@ -2,22 +2,8 @@
 
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import { Gender, Size } from '@/generated/prisma/client';
 import { requireAdmin } from '@/lib/auth-utils';
-
-export interface AdminProductInput {
-  name: string;
-  slug: string;
-  description: string;
-  price: number;
-  stock: number;
-  categoryId: string;
-  gender: Gender;
-  sizes: Size[];
-  isFeatured: boolean;
-  banner?: string | null;
-  images: string[];
-}
+import { type AdminProductInput } from '@/lib/validators/product';
 
 export const createProduct = async (data: AdminProductInput) => {
   const authCheck = await requireAdmin();

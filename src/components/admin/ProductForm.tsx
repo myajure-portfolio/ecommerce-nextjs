@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useTransition } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm, type Control } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { Loader2, Plus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,52 +28,14 @@ import { createProduct } from '@/actions/products/create-product';
 import { updateProduct } from '@/actions/products/update-product';
 import { toast } from 'react-toastify';
 import { cn } from '@/lib/utils';
-
-
-const GENDERS = ['men', 'women', 'kid', 'unisex'] as const;
-const SIZES = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'] as const;
-
-const productSchema = z.object({
-  name: z.string().min(2, 'Name must be at least 2 characters'),
-  slug: z.string().min(2, 'Slug must be at least 2 characters'),
-  description: z.string().min(10, 'Description must be at least 10 characters'),
-  price: z.coerce.number().min(0.01, 'Price must be greater than 0'),
-  stock: z.coerce.number().int().min(0, 'Stock cannot be negative'),
-  categoryId: z.string().min(1, 'Please select a category'),
-  gender: z.enum(GENDERS),
-  sizes: z.array(z.enum(SIZES)).min(1, 'Select at least one size'),
-  isFeatured: z.boolean(),
-  banner: z.string().nullable().optional(),
-  images: z.array(z.string()).min(1, 'Add at least one image'),
-});
-
-type ProductFormValues = z.infer<typeof productSchema>;
-
-interface Category {
-  id: string;
-  name: string;
-}
+import { productSchema, type ProductFormValues } from '@/lib/validators/product';
+import type { Category } from '@/interfaces';
 
 interface ProductFormProps {
   categories: Category[];
   initialData?: Partial<ProductFormValues> & { id?: string };
   isEdit?: boolean;
 }
-
-// Local type matching AdminProductInput on the server — avoids importing Prisma in the client
-type ProductPayload = {
-  name: string;
-  slug: string;
-  description: string;
-  price: number;
-  stock: number;
-  categoryId: string;
-  gender: 'men' | 'women' | 'kid' | 'unisex';
-  sizes: ('XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL')[];
-  isFeatured: boolean;
-  banner?: string | null;
-  images: string[];
-};
 
 export function ProductForm({ categories, initialData, isEdit }: ProductFormProps) {
   const router = useRouter();
@@ -90,8 +51,8 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
       price: initialData?.price ?? 0,
       stock: initialData?.stock ?? 0,
       categoryId: initialData?.categoryId ?? '',
-      gender: (initialData?.gender as ProductFormValues['gender']) ?? 'men',
-      sizes: (initialData?.sizes as ProductFormValues['sizes']) ?? [],
+      gender: initialData?.gender ?? 'men',
+      sizes: initialData?.sizes ?? [],
       isFeatured: initialData?.isFeatured ?? false,
       banner: initialData?.banner ?? null,
       images: initialData?.images ?? [],
@@ -113,10 +74,15 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
   const onSubmit = async (data: ProductFormValues) => {
     startTransition(async () => {
       try {
-        const result =
-          isEdit && initialData?.id
-            ? await updateProduct(initialData.id, data as ProductPayload)
-            : await createProduct(data as ProductPayload);
+        const payload = {
+          ...data,
+          price: Number(data.price),
+          stock: Number(data.stock),
+        };
+
+        const result = isEdit && initialData?.id
+          ? await updateProduct(initialData.id, payload)
+          : await createProduct(payload);
 
         if (result.success) {
           toast.success(isEdit ? 'Product updated!' : 'Product created!');
@@ -132,13 +98,11 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
     });
   };
 
-  const ctrl = form.control;
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(
-          onSubmit,
+          onSubmit as any,
           (errors) => {
             console.warn('Validation errors:', errors);
             const firstError = Object.values(errors)[0];
@@ -150,13 +114,12 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
       >
         <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
           <div className="xl:col-span-2 space-y-6">
-            {/* Basic Information */}
             <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                 Basic Information
               </h3>
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
@@ -169,7 +132,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 )}
               />
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="slug"
                 render={({ field }) => (
                   <FormItem>
@@ -182,7 +145,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 )}
               />
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="description"
                 render={({ field }) => (
                   <FormItem>
@@ -200,14 +163,13 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
               />
             </div>
 
-            {/* Pricing & Inventory */}
             <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
-               <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest">
                 Pricing &amp; Inventory
               </h3>
               <div className="grid grid-cols-2 gap-4">
                 <FormField
-                  control={ctrl}
+                  control={form.control}
                   name="price"
                   render={({ field }) => (
                     <FormItem>
@@ -225,7 +187,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                   )}
                 />
                 <FormField
-                  control={ctrl}
+                  control={form.control}
                   name="stock"
                   render={({ field }) => (
                     <FormItem>
@@ -244,10 +206,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
               </div>
             </div>
 
-            {/* Product Images */}
             <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="images"
                 render={({ field }) => (
                   <FormItem>
@@ -306,10 +267,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
           </div>
 
           <div className="space-y-6">
-            {/* Category & Gender */}
-            <div className="rounded-2xl bg-card border border-border p-6 space-y-5 shadow-sm">
+            <div className="rounded-2xl bg-gray-900 border border-gray-800 p-6 space-y-5">
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="categoryId"
                 render={({ field }) => (
                   <FormItem>
@@ -333,7 +293,7 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                 )}
               />
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="gender"
                 render={({ field }) => (
                   <FormItem>
@@ -345,11 +305,10 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-popover border-border text-popover-foreground">
-                        {GENDERS.map(g => (
-                          <SelectItem key={g} value={g} className="capitalize">
-                            {g}
-                          </SelectItem>
-                        ))}
+                        <SelectItem value="men" className="capitalize">Men</SelectItem>
+                        <SelectItem value="women" className="capitalize">Women</SelectItem>
+                        <SelectItem value="kid" className="capitalize">Kid</SelectItem>
+                        <SelectItem value="unisex" className="capitalize">Unisex</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -358,10 +317,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
               />
             </div>
 
-            {/* Sizes */}
             <div className="rounded-2xl bg-card border border-border p-6 space-y-4 shadow-sm">
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="sizes"
                 render={({ field }) => (
                   <FormItem>
@@ -369,10 +327,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                       Available Sizes
                     </FormLabel>
                     <div className="flex flex-wrap gap-2 pt-2">
-                      {SIZES.map(size => {
-                        const sizeValue = size as ProductFormValues['sizes'][number];
-                        const currentSizes = (field.value ?? []) as ProductFormValues['sizes'];
-                        const isSelected = currentSizes.includes(sizeValue);
+                      {['XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXXL'].map(size => {
+                        const currentSizes = (field.value ?? []) as string[];
+                        const isSelected = currentSizes.includes(size);
                         return (
                           <button
                             key={size}
@@ -380,8 +337,8 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
                             onClick={() => {
                               field.onChange(
                                 isSelected
-                                  ? currentSizes.filter(s => s !== sizeValue)
-                                  : [...currentSizes, sizeValue]
+                                  ? currentSizes.filter(s => s !== size)
+                                  : [...currentSizes, size]
                               );
                             }}
                             className={cn(
@@ -402,10 +359,9 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
               />
             </div>
 
-            {/* Featured */}
             <div className="rounded-2xl bg-card border border-border p-6 space-y-4 shadow-sm">
               <FormField
-                control={ctrl}
+                control={form.control}
                 name="isFeatured"
                 render={({ field }) => (
                   <FormItem className="flex items-center justify-between">
