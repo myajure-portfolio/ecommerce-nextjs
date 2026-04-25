@@ -2,7 +2,7 @@ import { prisma } from '@/lib/prisma';
 import NextAuth, { CredentialsSignin, NextAuthConfig } from 'next-auth';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import Credentials from 'next-auth/providers/credentials';
-import { compareSync } from 'bcryptjs';
+import { compare } from 'bcryptjs';
 import { ZodError } from 'zod';
 import { getUserByEmail } from '@/actions/users/get-user-by-email';
 
@@ -19,10 +19,14 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         try {
           const user = await getUserByEmail(credentials.email as string);
-          if (!user) throw new CustomError('Email not found');
+          if (!user) {
+            throw new CustomError('Invalid credentials');
+          }
 
-          const passMatch = compareSync(credentials.password as string, user.password);
-          if (!passMatch) throw new CustomError('Invalid password');
+          const passMatch = await compare(credentials.password as string, user.password);
+          if (!passMatch) {
+            throw new CustomError('Invalid credentials');
+          }
 
           return {
             id: user.id,
@@ -30,18 +34,21 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.email,
             role: user.role,
           };
-        } catch (error: any) {
+        } catch (error: unknown) {
           if (error instanceof ZodError) {
             throw new CustomError('invalid_schema');
           }
-          throw new CustomError(error.message);
+          if (error instanceof CustomError) {
+            throw error;
+          }
+          throw new CustomError('Authentication failed');
         }
       },
     }),
   ],
   session: {
-    strategy: 'jwt' as const,
-    maxAge: 30 * 24 * 60 * 60, // 30 days
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60,
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -72,6 +79,5 @@ class CustomError extends CredentialsSignin {
     super();
     this.code = code;
     this.message = code;
-    this.stack = undefined;
   }
 }

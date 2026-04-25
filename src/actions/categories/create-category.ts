@@ -12,10 +12,11 @@ export const createCategory = async (name: string) => {
 
     revalidatePath('/admin/categories');
     return { success: true, category };
-  } catch (error: any) {
-    if (error.code === 'P2002') {
+  } catch (error: unknown) {
+    const err = error as { code?: string; message?: string };
+    if (err.code === 'P2002') {
       return { success: false, message: 'A category with this name already exists.' };
     }
-    return { success: false, message: error.message || 'Failed to create category.' };
+    return { success: false, message: err.message || 'Failed to create category.' };
   }
 };

@@ -11,11 +11,12 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SheetClose } from '@/components/ui/sheet';
 import { logout } from '@/actions/auth/logout';
+import type { Session } from '@/interfaces';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 interface UserButtonProps {
-  session: any;
+  session?: Session | null;
   isMobileSheet?: boolean;
 }
 
@@ -29,7 +30,7 @@ const UserAvatar = ({ initial }: { initial: string }) => (
 
 // ─── Desktop variant ──────────────────────────────────────────────────────────
 
-const DesktopUserButton = ({ session }: { session: any }) => {
+const DesktopUserButton = ({ session }: { session?: Session | null }) => {
   if (!session) {
     return (
       <div className="flex items-center space-x-2">
@@ -122,7 +123,7 @@ const DesktopUserButton = ({ session }: { session: any }) => {
 
 // ─── Mobile Sheet variant ─────────────────────────────────────────────────────
 
-const MobileSheetUserButton = ({ session }: { session: any }) => {
+const MobileSheetUserButton = ({ session }: { session?: Session | null }) => {
   if (!session) {
     return (
       <div className="flex flex-col space-y-2">

@@ -76,15 +76,13 @@ type ProductPayload = {
   images: string[];
 };
 
-type PFControl = Control<ProductFormValues>;
-
 export function ProductForm({ categories, initialData, isEdit }: ProductFormProps) {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [newImageUrl, setNewImageUrl] = useState('');
 
   const form = useForm<ProductFormValues>({
-    resolver: zodResolver(productSchema) as any,
+    resolver: zodResolver(productSchema),
     defaultValues: {
       name: initialData?.name ?? '',
       slug: initialData?.slug ?? '',
@@ -134,17 +132,17 @@ export function ProductForm({ categories, initialData, isEdit }: ProductFormProp
     });
   };
 
-  const ctrl = form.control as unknown as PFControl;
+  const ctrl = form.control;
 
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(
-          onSubmit as any,
+          onSubmit,
           (errors) => {
             console.warn('Validation errors:', errors);
             const firstError = Object.values(errors)[0];
-            const msg = (firstError as any)?.message || 'Please fill in all required fields';
+            const msg = (firstError as { message?: string })?.message || 'Please fill in all required fields';
             toast.error(msg);
           }
         )}

@@ -25,7 +25,7 @@ export default async function AdminPage() {
       <div>
         <h1 className="text-2xl font-bold text-foreground tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground mt-1 text-sm">
-          Welcome back. Here's what's happening in your store.
+          Welcome back. Here&apos;s what&apos;s happening in your store.
         </p>
       </div>
 
@@ -93,7 +93,7 @@ export default async function AdminPage() {
             {stats.recentOrders.length === 0 && (
               <p className="px-6 py-6 text-sm text-muted-foreground text-center">No orders yet.</p>
             )}
-            {stats.recentOrders.map((order: any) => (
+            {stats.recentOrders.map(order => (
               <div
                 key={order.id}
                 className="flex items-center gap-4 px-6 py-3.5 hover:bg-accent/50 transition-colors"
@@ -129,7 +129,7 @@ export default async function AdminPage() {
                 All products are well stocked. ✓
               </p>
             )}
-            {stats.lowStockProducts.map((product: any) => (
+            {stats.lowStockProducts.map(product => (
               <div
                 key={product.id}
                 className="flex items-center gap-4 px-6 py-3.5 hover:bg-accent/50 transition-colors"

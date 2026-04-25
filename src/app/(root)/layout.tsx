@@ -2,6 +2,7 @@ import { Header } from '@/components/shared/header';
 import { Footer } from '@/components/shared/footer';
 import { auth } from '@/auth';
 import { getCart } from '@/actions/cart/get-cart';
+import type { Session, Cart } from '@/interfaces';
 
 const RootLayout = async ({
   children,
@@ -13,7 +14,7 @@ const RootLayout = async ({
 
   return (
     <div className="min-h-screen bg-background transition-colors duration-300">
-      <Header session={session} cart={cart as any} />
+      <Header session={session as Session | null} cart={cart as Cart | undefined} />
       <main>{children}</main>
       <Footer />
     </div>

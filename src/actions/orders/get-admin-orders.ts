@@ -26,7 +26,7 @@ export const getAdminOrders = async ({
   ]);
 
   return {
-    orders: orders.map((o: any) => ({
+    orders: orders.map(o => ({
       ...o,
       totalPrice: o.totalPrice.toString(),
       user: o.user,

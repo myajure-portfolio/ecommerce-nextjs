@@ -18,7 +18,8 @@ export const deleteCategory = async (id: string) => {
 
     revalidatePath('/admin/categories');
     return { success: true };
-  } catch (error: any) {
-    return { success: false, message: error.message || 'Failed to delete category.' };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to delete category';
+    return { success: false, message };
   }
 };

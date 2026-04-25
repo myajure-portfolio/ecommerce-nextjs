@@ -5,7 +5,7 @@ import { signUpFormSchema } from '@/lib/validators/user';
 import { isRedirectError } from 'next/dist/client/components/redirect-error';
 import z from 'zod';
 import { prisma } from '@/lib/prisma';
-import { hashSync } from 'bcryptjs';
+import { hash } from 'bcryptjs';
 
 export const signUp = async (prevState: unknown, formData: FormData) => {
   try {
@@ -24,7 +24,7 @@ export const signUp = async (prevState: unknown, formData: FormData) => {
       return { success: false, message: 'User with this email already exists' };
     }
 
-    const hashedPassword = hashSync(data.password, 10);
+    const hashedPassword = await hash(data.password, 10);
 
     await prisma.user.create({
       data: {

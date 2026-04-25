@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { Gender, Size } from '@/generated/prisma/client';
+import { requireAdmin } from '@/lib/auth-utils';
 
 export interface AdminProductInput {
   name: string;
@@ -19,6 +20,11 @@ export interface AdminProductInput {
 }
 
 export const createProduct = async (data: AdminProductInput) => {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, message: authCheck.error };
+  }
+
   try {
     const { images, ...productData } = data;
 
@@ -41,10 +47,11 @@ export const createProduct = async (data: AdminProductInput) => {
         rating: product.rating.toString(),
       }
     };
-  } catch (error: any) {
-    if (error.code === 'P2002') {
+  } catch (error: unknown) {
+    const err = error as { code?: string; message?: string };
+    if (err.code === 'P2002') {
       return { success: false, message: 'A product with this slug already exists.' };
     }
-    return { success: false, message: error.message || 'Failed to create product.' };
+    return { success: false, message: err.message || 'Failed to create product.' };
   }
 };

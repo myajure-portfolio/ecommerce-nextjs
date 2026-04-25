@@ -21,7 +21,8 @@ export async function removeFromCart(cartItemId: string) {
 
     revalidatePath('/', 'layout');
     return { success: true };
-  } catch (error: any) {
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to remove item';
+    return { success: false, message };
   }
 }

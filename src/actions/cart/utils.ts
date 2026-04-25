@@ -6,26 +6,60 @@ export async function getCartId() {
   return cookieStore.get('sessionCartId')?.value;
 }
 
-export type CartWithItems = NonNullable<Awaited<ReturnType<typeof prisma.cart.findFirst<{ include: { items: true } }>>>>;
+interface CartItemInput {
+  price: unknown;
+  qty: number;
+}
 
-export function serializeCart(cart: CartWithItems) {
+export type CartWithItems = Awaited<ReturnType<typeof prisma.cart.findFirst>> &
+  Required<Pick<Awaited<ReturnType<typeof prisma.cart.findFirst>>, 'items'>>;
+
+interface SerializeCartInput {
+  id: string;
+  sessionCartId: string;
+  userId: string | null;
+  itemsPrice: unknown;
+  shippingPrice: unknown;
+  taxPrice: unknown;
+  totalPrice: unknown;
+  items: Array<{
+    id: string;
+    productId: string;
+    qty: number;
+    price: unknown;
+    name: string;
+    slug: string;
+    image: string;
+    size: string | null;
+  }>;
+}
+
+export function serializeCart(cart: SerializeCartInput) {
   return {
-    ...cart,
+    id: cart.id,
+    sessionCartId: cart.sessionCartId,
+    userId: cart.userId,
     itemsPrice: Number(cart.itemsPrice),
     shippingPrice: Number(cart.shippingPrice),
     taxPrice: Number(cart.taxPrice),
     totalPrice: Number(cart.totalPrice),
-    items: cart.items.map((item) => ({
-      ...item,
+    items: cart.items.map(item => ({
+      id: item.id,
+      productId: item.productId,
+      qty: item.qty,
       price: Number(item.price),
+      name: item.name,
+      slug: item.slug,
+      image: item.image,
+      size: item.size,
     })),
   };
 }
 
-export const calculateTotals = (items: any[]) => {
+export const calculateTotals = (items: CartItemInput[]) => {
   const itemsPrice = items.reduce((acc, item) => acc + Number(item.price) * item.qty, 0);
   const shippingPrice = itemsPrice > 100 ? 0 : 9.99;
-  const taxPrice = 0;
+  const taxPrice = itemsPrice * 0.1;
   const totalPrice = itemsPrice + shippingPrice + taxPrice;
 
   return { itemsPrice, shippingPrice, taxPrice, totalPrice };

@@ -5,8 +5,7 @@ import { prisma } from '@/lib/prisma';
 import { auth } from '@/auth';
 import { revalidatePath } from 'next/cache';
 import { Size } from '@/generated/prisma/client';
-import { getCartId, calculateTotals, serializeCart } from './utils';
-import { getCart } from './get-cart';
+import { calculateTotals } from './utils';
 
 export async function addToCart(productId: string, size?: Size) {
   try {
@@ -14,9 +13,13 @@ export async function addToCart(productId: string, size?: Size) {
       where: { id: productId },
       include: { images: true },
     });
-    if (!product) throw new Error('Product not found');
+    if (!product) {
+      return { success: false, message: 'Product not found' };
+    }
 
     let cartId = await getCartId();
+    const session = await auth();
+    const userId = session?.user?.id;
 
     if (!cartId) {
       cartId = crypto.randomUUID();
@@ -30,23 +33,62 @@ export async function addToCart(productId: string, size?: Size) {
       });
     }
 
-    let cart = await getCart();
-    const session = await auth();
-    const userId = session?.user?.id as string | undefined;
+    const existingCart = await prisma.cart.findFirst({
+      where: {
+        OR: [
+          { sessionCartId: cartId },
+          ...(userId ? [{ userId }] : []),
+        ],
+      },
+      include: { items: true },
+      orderBy: { updatedAt: 'desc' },
+    });
 
-    if (!cart) {
-      const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calculateTotals([
-        { price: product.price, qty: 1 },
-      ]);
+    if (existingCart) {
+      const existingItem = existingCart.items.find(
+        item => item.productId === productId && item.size === (size || null)
+      );
 
-      const newCart = await prisma.cart.create({
+      if (existingItem) {
+        await prisma.cartItem.update({
+          where: { id: existingItem.id },
+          data: { qty: existingItem.qty + 1 },
+        });
+      } else {
+        await prisma.cartItem.create({
+          data: {
+            cartId: existingCart.id,
+            productId: product.id,
+            qty: 1,
+            price: product.price,
+            name: product.name,
+            slug: product.slug,
+            image: product.images?.[0]?.url || '',
+            size: size || null,
+          },
+        });
+      }
+
+      const updatedItems = await prisma.cartItem.findMany({
+        where: { cartId: existingCart.id },
+      });
+      const totals = calculateTotals(updatedItems);
+
+      await prisma.cart.update({
+        where: { id: existingCart.id },
+        data: {
+          userId: userId || existingCart.userId,
+          ...totals,
+        },
+      });
+    } else {
+      const totals = calculateTotals([{ price: product.price, qty: 1 }]);
+
+      await prisma.cart.create({
         data: {
           sessionCartId: cartId,
-          userId,
-          itemsPrice,
-          shippingPrice,
-          taxPrice,
-          totalPrice,
+          userId: userId || null,
+          ...totals,
           items: {
             create: {
               productId: product.id,
@@ -59,46 +101,18 @@ export async function addToCart(productId: string, size?: Size) {
             },
           },
         },
-        include: { items: true },
-      });
-      cart = serializeCart(newCart);
-    } else {
-      const existingItem = cart.items.find(
-        item => item.productId === productId && item.size === (size || null)
-      );
-
-      if (existingItem) {
-        await prisma.cartItem.update({
-          where: { id: existingItem.id },
-          data: { qty: existingItem.qty + 1 },
-        });
-      } else {
-        await prisma.cartItem.create({
-          data: {
-            cartId: cart.id,
-            productId: product.id,
-            qty: 1,
-            price: product.price,
-            name: product.name,
-            slug: product.slug,
-            image: product.images?.[0]?.url || '',
-            size: size || null,
-          },
-        });
-      }
-
-      const updatedItems = await prisma.cartItem.findMany({ where: { cartId: cart.id } });
-      const { itemsPrice, shippingPrice, taxPrice, totalPrice } = calculateTotals(updatedItems);
-
-      await prisma.cart.update({
-        where: { id: cart.id },
-        data: { itemsPrice, shippingPrice, taxPrice, totalPrice },
       });
     }
 
     revalidatePath('/', 'layout');
     return { success: true, message: 'Item added to cart' };
-  } catch (error: any) {
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to add item to cart';
+    return { success: false, message };
   }
+}
+
+async function getCartId(): Promise<string | undefined> {
+  const cookieStore = await cookies();
+  return cookieStore.get('sessionCartId')?.value;
 }

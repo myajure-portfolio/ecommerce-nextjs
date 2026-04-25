@@ -46,19 +46,19 @@ export const getAdminStats = async () => {
     totalCategories,
     totalOrders,
     totalRevenue,
-    recentProducts: recentProducts.map((p: any) => ({
+    recentProducts: recentProducts.map(p => ({
       ...p,
       price: p.price.toString(),
       category: p.category.name,
-      images: p.images.map((img: any) => img.url),
+      images: p.images.map(img => img.url),
     })),
-    lowStockProducts: lowStockProducts.map((p: any) => ({
+    lowStockProducts: lowStockProducts.map(p => ({
       ...p,
       price: p.price.toString(),
       category: p.category.name,
-      images: p.images.map((img: any) => img.url),
+      images: p.images.map(img => img.url),
     })),
-    recentOrders: recentOrders.map((o: any) => ({
+    recentOrders: recentOrders.map(o => ({
       ...o,
       totalPrice: o.totalPrice.toString(),
       userName: o.user.name,

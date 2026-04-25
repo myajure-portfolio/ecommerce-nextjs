@@ -11,11 +11,12 @@ import { Badge } from '@/components/ui/badge';
 import { removeFromCart } from '@/actions/cart/remove-from-cart';
 import { updateCartItemQuantity } from '@/actions/cart/update-cart-item-quantity';
 import { toast } from 'react-toastify';
+import type { Cart, CartItem } from '@/interfaces';
 
 interface CartSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  cart?: any;
+  cart?: Cart;
 }
 
 export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange, cart }) => {
@@ -79,7 +80,7 @@ export const CartSheet: React.FC<CartSheetProps> = ({ open, onOpenChange, cart }
             <>
               <div className="flex-1 overflow-auto py-6">
                 <div className="space-y-6">
-                  {cartItems.map((item: any) => (
+                  {cartItems.map((item: CartItem) => (
                     <div key={item.id} className="flex gap-4">
                       <div className="relative h-20 w-16 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-800 shrink-0">
                         <Image

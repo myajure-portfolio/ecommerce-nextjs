@@ -19,7 +19,7 @@ export const getOrderById = async (id: string) => {
     itemsPrice: order.itemsPrice.toString(),
     shippingPrice: order.shippingPrice.toString(),
     taxPrice: order.taxPrice.toString(),
-    orderItems: order.orderItems.map((item: any) => ({
+    orderItems: order.orderItems.map(item => ({
       ...item,
       price: item.price.toString(),
     })),

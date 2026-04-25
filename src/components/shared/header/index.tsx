@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Menu, Moon, Sun, Heart } from 'lucide-react';
-import { useTheme } from 'next-themes';
+import { ShoppingCart, Menu, Heart } from 'lucide-react';
 import { CartSheet } from './CartSheet';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle, SheetClose } from '@/components/ui/sheet';
@@ -11,6 +10,7 @@ import { APP_NAME } from '@/lib/constants';
 import { Badge } from '@/components/ui/badge';
 import { UserButton } from './UserButton';
 import { ThemeToggle } from '../ThemeToggle';
+import type { Session, Cart, CartItem } from '@/interfaces';
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
@@ -62,7 +62,7 @@ const CartButton = ({ onClick, count }: { onClick: () => void; count: number }) 
   </Button>
 );
 
-const MobileSheet = ({ session }: { session: any }) => {
+const MobileSheet = ({ session }: { session?: Session | null }) => {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -114,9 +114,9 @@ const MobileSheet = ({ session }: { session: any }) => {
 
 // ─── Main Header ──────────────────────────────────────────────────────────────
 
-export const Header = ({ session, cart }: { session: any; cart?: any }) => {
+export const Header = ({ session, cart }: { session?: Session | null; cart?: Cart }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartCount = cart?.items?.reduce((acc: number, item: any) => acc + item.qty, 0) || 0;
+  const cartCount = cart?.items?.reduce((acc: number, item: CartItem) => acc + item.qty, 0) || 0;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-800 bg-white/95 dark:bg-gray-900/95 backdrop-blur supports-backdrop-filter:bg-white/60 dark:supports-backdrop-filter:bg-gray-900/60">

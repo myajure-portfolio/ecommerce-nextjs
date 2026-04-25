@@ -89,11 +89,11 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
             ) : (
               <>
                 <div
-                  key={new URLSearchParams(params as any).toString()}
+                  key={new URLSearchParams(params as Record<string, string>).toString()}
                   className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out"
                 >
                   {products.map(product => (
-                    <ProductCard key={product.id} product={product as any} />
+                    <ProductCard key={product.id} product={product} />
                   ))}
                 </div>
 

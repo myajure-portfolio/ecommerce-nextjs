@@ -18,7 +18,7 @@ export const getProductBySlug = async (slug: string) => {
       rating: Number(product.rating),
       category: product.category.name,
     };
-  } catch (error) {
+  } catch {
     return null;
   }
 };

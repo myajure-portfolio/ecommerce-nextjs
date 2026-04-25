@@ -29,7 +29,8 @@ export async function updateCartItemQuantity(cartItemId: string, qty: number) {
 
     revalidatePath('/', 'layout');
     return { success: true };
-  } catch (error: any) {
-    return { success: false, message: error.message };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to update quantity';
+    return { success: false, message };
   }
 }

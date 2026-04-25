@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { revalidatePath } from 'next/cache';
 import { Gender, Size } from '@/generated/prisma/client';
+import { requireAdmin } from '@/lib/auth-utils';
 
 export interface AdminProductInput {
   name: string;
@@ -19,6 +20,11 @@ export interface AdminProductInput {
 }
 
 export const updateProduct = async (id: string, data: AdminProductInput) => {
+  const authCheck = await requireAdmin();
+  if (!authCheck.authorized) {
+    return { success: false, message: authCheck.error };
+  }
+
   try {
     const { images, ...productData } = data;
 
@@ -44,7 +50,8 @@ export const updateProduct = async (id: string, data: AdminProductInput) => {
         rating: product.rating.toString(),
       }
     };
-  } catch (error: any) {
-    return { success: false, message: error.message || 'Failed to update product.' };
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'Failed to update product';
+    return { success: false, message };
   }
 };

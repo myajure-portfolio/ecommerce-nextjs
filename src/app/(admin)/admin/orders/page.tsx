@@ -37,7 +37,7 @@ export default async function AdminOrdersPage({ searchParams }: { searchParams: 
               {orders.length === 0 && (
                 <tr><td colSpan={6} className="px-6 py-12 text-center text-muted-foreground">No orders found.</td></tr>
               )}
-              {orders.map((order: any) => (
+              {orders.map(order => (
                 <tr key={order.id} className="hover:bg-accent/30 transition-colors">
                   <td className="px-6 py-4 font-mono text-xs text-muted-foreground">{order.id.slice(0, 8)}...</td>
                   <td className="px-4 py-4 text-foreground">
